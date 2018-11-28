@@ -22,17 +22,19 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
+import Database from '~/assets/utils/db'
 export default {
-  components: {
-    Logo
-  },
+  components: {},
   data () {
     return {
       inputUrl: '',
       fetchedData: ''
     }
+  },
+  mounted () {
+    let logger = {}
+    logger = new Database('pounds', 'fish', 1)
+    logger.init()
   },
   methods: {
     fetchContent () {

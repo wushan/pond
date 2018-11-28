@@ -31,12 +31,14 @@
     "metascraper-publisher": "^4.7.0",
     "metascraper-title": "^4.7.0",
     "metascraper-url": "^4.7.0",
+    "moment": "^2.22.2",
     "node-sass": "^4.10.0",
     "nodejieba": "^2.3.0",
     "nuxt": "^2.0.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "short-uuid": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
