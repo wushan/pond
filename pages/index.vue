@@ -1,42 +1,84 @@
 <template lang="pug">
   #home
+    section.hero.is-info.is-medium
+      .hero-head
+        .navbar
+          .container
+            .navbar-brand
+              a.navbar-item
+            .navbar-menu
+              .navbar-end
+                a.navbar-item aaa
+                a.navbar-item bbb
+                a.navbar-item ccc
+      .hero-body
+        .container.has-text-centered
+          figure.logo
+            img(src="~/assets/images/logo.png")
+          //- h1.title Ponds
+          //- h2.subtitle Feed some fishes in the ponds.
+        .container#inputArea
+          .restrict-tiny
+            input.input.is-medium(type="text", placeholder="Paste url here", v-model="inputUrl", @input="fetchContent")
+      .hero-foot
+        .tabs
+          .container
+            ul
+              li
+                a.is-active ala
+              li
+                a ala
     section.section
-      .container
-        .restrict-tiny
-          input.input.is-large(type="text", placeholder="Paste url here", v-model="inputUrl", @change="fetchContent")
+      //- .container
+      //-   .restrict-tiny
+      //-     input.input.is-large(type="text", placeholder="Paste url here", v-model="inputUrl", @input="fetchContent")
       .container(v-if="fetchedData")
         .restrict-tiny
-          .card
-            .card-image
-              figure.image
-                img(:src="fetchedData.image")
-            .card-content
-              //- .media
-              //-   .media-content
-              time {{fetchedData.date}}
-              .content
-                p.title.is-4
-                  a(:href="fetchedData.url", target="_blank") {{fetchedData.title}}
-                p {{fetchedData.description}}
-          p {{fetchedData}}
+          previewCard(:source="fetchedData")
+          button.button(@click="add") Add
+      .container
+        .columns.is-mobile.is-multiline.is-variable.is-2
+          .column.is-6-mobile.is-4-tablet.is-2-desktop(v-for="record of getRecordCache", :key="record.sid")
+            previewCard(:source="record.data")
 </template>
 
 <script>
 import Database from '~/assets/utils/db'
+import previewCard from '~/components/previewCard'
+import { mapGetters } from 'vuex'
+let db = {}
 export default {
-  components: {},
+  components: {
+    previewCard
+  },
   data () {
     return {
       inputUrl: '',
-      fetchedData: ''
+      fetchedData: null
     }
   },
+  computed: {
+    ...mapGetters({
+      getRecordCache: 'app/getRecordCache'
+    })
+  },
   mounted () {
-    let logger = {}
-    logger = new Database('pounds', 'fish', 1)
-    logger.init()
+    db = new Database('pounds', 'fish', 3)
+    this.fecthHistory()
   },
   methods: {
+    add () {
+      db.insert('tony@simbo.com.tw', 'default', this.fetchedData).then(() => {
+        this.fetchedData = null
+        this.fecthHistory()
+      })
+    },
+    fecthHistory () {
+      // db.getRange()
+      db.getAll().then((res) => {
+        this.$store.commit('app/setRecordCache', res)
+      })
+    },
     fetchContent () {
       this.$axios.post('/api/fetchContent', {url: this.inputUrl}).then((res) => {
         this.fetchedData = res.data
@@ -54,7 +96,7 @@ export default {
   margin: auto;
 }
 .container {
-  margin-bottom: 1em;
+  // margin-bottom: 1em;
 }
 .image {
   height: 0;
@@ -72,5 +114,21 @@ export default {
 }
 .card-image {
   background-color: #f7f7f7;
+}
+h1 {
+  text-align: center;
+  small {
+    display: block;
+  }
+}
+#inputArea {
+  margin-top: 1em;
+}
+.logo {
+  img {
+    max-width: 120px;
+    display: block;
+    margin: auto;
+  }
 }
 </style>

@@ -31,7 +31,7 @@ module.exports = class Resolver {
       (async () => {
         const { body: html, url } = await got(this.resolved.url)
         const $ = cheerio.load(html)
-        let texts = $('p').text()
+        let texts = $('body').text()
         var keywords = nodejieba.extract(texts, 4).map((a, b) => {
           return a.word
         })

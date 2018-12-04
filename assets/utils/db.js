@@ -37,23 +37,31 @@ export default class Database {
   createDB (evt, objectStore) {
     objectStore = evt.currentTarget.result.createObjectStore(this.objectStoreName, {
       // 主 KEY
-      keyPath: 'id', autoIncrement: false, unique: true
+      keyPath: 'sid', autoIncrement: false, unique: true
     })
-    objectStore.createIndex('namespace', 'namespace', { unique: false })
-    objectStore.createIndex('level', 'level', { unique: false })
-    objectStore.createIndex('descriptor', 'descriptor', { unique: false })
-    objectStore.createIndex('time', 'time', { unique: false })
-    objectStore.createIndex('env', 'env', { unique: false })
+    objectStore.createIndex('sid', 'sid', { unique: true })
+    objectStore.createIndex('category', 'category', { unique: false })
+    objectStore.createIndex('username', 'username', { unique: false })
     objectStore.createIndex('data', 'data', { unique: false })
-    objectStore.createIndex('uploaded', 'uploaded', { unique: false })
+    objectStore.createIndex('sync', 'sync', { unique: false })
+    objectStore.createIndex('indexed', 'indexed', { unique: false })
+    objectStore.createIndex('created', 'created', { unique: false })
   }
-  log(level, descriptor, env, data) {
+  insert(username, category, data) {
     return new Promise((resolve, reject) => {
       this.init().then(() => {
         // 利用 this.db 取得 db 連線
         var transaction = this.db.transaction(this.objectStoreName, 'readwrite')
         var objectStore = transaction.objectStore(this.objectStoreName)
-        var request = objectStore.add({ id: short.uuid(), namespace: this.name, level: level, descriptor: descriptor, env: env, time: moment().format('x'), data: data, uploaded: 'false' })
+        var request = objectStore.add({
+          sid: short.uuid(),
+          category: category,
+          username: username,
+          data: data,
+          sync: 0,
+          indexed: 0,
+          created: moment().format('x')
+        })
         request.onsuccess = function (evt) {
           resolve()
         }
@@ -90,6 +98,25 @@ export default class Database {
         }
         request.onerror = function (evt) {
           reject(evt)
+        }
+      })
+    })
+  }
+  getAll () {
+    return new Promise((resolve, reject) => {
+      // if (limit === undefined) {
+      //   limit = 5
+      // }
+      this.init().then(() => {
+        var transaction = this.db.transaction(this.objectStoreName, 'readwrite')
+        var objectStore = transaction.objectStore(this.objectStoreName)
+        // objectStore = objectStore.index('time')
+        var request = objectStore.getAll()
+        request.onsuccess = function (evt) {
+          let result = evt.target.result.sort((a, b) => {
+            return b.created - a.created
+          })
+          resolve(result)
         }
       })
     })

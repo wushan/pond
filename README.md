@@ -1,7 +1,9 @@
 # ponds
 
 > My peachy Nuxt.js project
-
+## Todo
+* 英文分詞關鍵字
+* 分詞來源的 Fallback
 ## Build Setup
 
 ``` bash
