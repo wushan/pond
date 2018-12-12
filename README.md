@@ -5,5 +5,9 @@
 Website[http://pondsapp.now.sh/]
 
 ## Todo
+* Import Bookmarks
+* Wrap via Electron
+* Auth0
 * 英文分詞關鍵字
 * 分詞來源的 Fallback
+* Server 同步
