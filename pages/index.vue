@@ -26,6 +26,11 @@ export default {
       getRecordCache: 'app/getRecordCache'
     })
   },
+  watch: {
+    getRecordCache () {
+      console.log('cacheChanged')
+    }
+  },
   mounted () {
     db = new Database('pounds', 'fish', 3)
     this.fecthHistory()

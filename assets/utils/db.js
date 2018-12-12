@@ -53,7 +53,7 @@ export default class Database {
         // 利用 this.db 取得 db 連線
         var transaction = this.db.transaction(this.objectStoreName, 'readwrite')
         var objectStore = transaction.objectStore(this.objectStoreName)
-        var request = objectStore.add({
+        let record = {
           sid: short.uuid(),
           category: category,
           username: username,
@@ -61,9 +61,10 @@ export default class Database {
           sync: 0,
           indexed: 0,
           created: moment().format('x')
-        })
+        }
+        var request = objectStore.add(record)
         request.onsuccess = function (evt) {
-          resolve()
+          resolve(record)
         }
         request.onerror = function (evt) {
           reject(evt)
@@ -114,7 +115,7 @@ export default class Database {
         var request = objectStore.getAll()
         request.onsuccess = function (evt) {
           let result = evt.target.result.sort((a, b) => {
-            return b.created - a.created
+            return a.created - b.created
           })
           resolve(result)
         }

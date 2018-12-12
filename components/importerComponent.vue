@@ -2,7 +2,7 @@
   #importerWrapper
     .area
       input.input(type="text", placeholder="Paste url here", v-model="inputUrl", @input="fetchContent")
-    .area
+    .area(v-if="inputUrl")
       button.button(@click="add")
         span.icon
           i.fa.fa-plus-square-o
@@ -28,7 +28,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoading: 'app/isLoading'
+      isLoading: 'app/isLoading',
+      previewContent: 'app/getPreviewContent'
     })
   },
   mounted () {
@@ -46,10 +47,14 @@ export default {
       })
     },
     add () {
-      db.insert('tony@simbo.com.tw', 'default', this.fetchedData).then(() => {
-        this.fetchedData = null
-        this.fecthHistory()
-      })
+      if (!this.previewContent) {
+        return
+      } else {
+        db.insert('tony@simbo.com.tw', 'default', this.previewContent).then((result) => {
+          this.$store.commit('app/setRecordCache', [result])
+          this.$store.commit('app/setPreviewContent', null)
+        })
+      }
     },
     discard () {
       this.inputUrl = ''

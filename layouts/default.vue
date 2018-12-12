@@ -33,6 +33,8 @@ html, body, #wrapper {
 }
 #appContent {
   padding-top: 83px;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 #previewNotification {
   position: absolute;

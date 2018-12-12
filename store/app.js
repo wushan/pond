@@ -12,7 +12,9 @@ export const mutations = {
     state.previewContent = data
   },
   setRecordCache (state, data) {
-    state.recordCache = data
+    for (let record of data) {
+      state.recordCache.unshift(record)
+    }
   }
 }
 

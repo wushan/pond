@@ -1,6 +1,16 @@
 <template lang="pug">
   #appHeader
-    importerComponent
+    .appHeaderInner.container
+      .col.brand-wrapper
+        nuxt-link(to="/")
+          figure.brand
+            img(src="~/assets/images/logo.svg")
+      .col.searchBox
+        input.input(type="text", placeholder="Search a fish.", v-model="keyword")
+      .col.userBox
+        p user
+      .col.importBox
+        importerComponent
 </template>
 
 <script>
@@ -8,11 +18,17 @@ import importerComponent from '~/components/importerComponent'
 export default {
   components: {
     importerComponent
+  },
+  data () {
+    return {
+      keyword: ''
+    }
   }
 }
 </script>
 
 <style lang="scss">
+@import '~breakpoint-sass/stylesheets/_breakpoint';
 #appHeader {
   background: #fff;
   position: fixed;
@@ -30,5 +46,42 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .appHeaderInner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    .col {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      padding: 0 0.2em;
+      &.brand-wrapper {
+        max-width: 46px;
+      }
+      &.searchBox {
+        min-width: 40%;
+      }
+      &.userBox {
+        max-width: 46px;
+      }
+      &.importBox {
+        @include breakpoint(768px) {
+          max-width: 200px;
+        }
+      }
+    }
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+    img {
+      max-height: 36px;
+      width: auto;
+      max-width: auto;
+      display: block;
+    }
+  }
 }
 </style>

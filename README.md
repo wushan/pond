@@ -1,24 +1,9 @@
-# ponds
+# Ponds App
 
-> My peachy Nuxt.js project
+> A bookmark service based on indexedDB with fabulous sorting and searching ability. Ponds app is a useful service for knowledge sharing between small team and personal use.
+
+Website[http://pondsapp.now.sh/]
+
 ## Todo
 * 英文分詞關鍵字
 * 分詞來源的 Fallback
-## Build Setup
-
-``` bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn run dev
-
-# build for production and launch server
-$ yarn run build
-$ yarn start
-
-# generate static project
-$ yarn run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
