@@ -39,11 +39,11 @@
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
-    "short-uuid": "^3.0.1"
+    "short-uuid": "^3.0.1",
+    "breakpoint-sass": "^2.7.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
-    "breakpoint-sass": "^2.7.1",
     "eslint": "^5.0.1",
     "eslint-config-prettier": "^3.1.0",
     "eslint-loader": "^2.0.0",
