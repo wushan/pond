@@ -1,7 +1,7 @@
 <template lang="pug">
   #home
     .container
-      .columns.is-mobile.is-multiline.is-variable.is-2
+      transition-group.columns.is-mobile.is-multiline.is-variable.is-2(name="transform", tag="div")
         .column.is-6-mobile.is-4-tablet.is-2-desktop(v-for="record of getRecordCache", :key="record.sid")
           previewCard(:source="record.data")
 </template>
@@ -36,8 +36,12 @@ export default {
     this.fecthHistory()
   },
   methods: {
+    accessBookMarks () {
+      console.log(bookmarks)
+    },
     fecthHistory () {
       // db.getRange()
+      this.$store.commit('app/resetRecordCache')
       db.getAll().then((res) => {
         this.$store.commit('app/setRecordCache', res)
       })

@@ -15,6 +15,9 @@ export const mutations = {
     for (let record of data) {
       state.recordCache.unshift(record)
     }
+  },
+  resetRecordCache(state, data) {
+    state.recordCache = state.recordCache.slice(0, 0)
   }
 }
 

@@ -147,4 +147,31 @@ export default class Database {
       })
     })
   }
+  search (keyword, limit) {
+    return new Promise((resolve, reject) => {
+      if (limit === undefined) {
+        limit = 5
+      }
+      this.init().then(() => {
+        var transaction = this.db.transaction(this.objectStoreName, 'readonly')
+        var objectStore = transaction.objectStore(this.objectStoreName)
+        // objectStore = objectStore.index('time')
+        var request = objectStore.openCursor()
+        let results = []
+        request.onsuccess = function (evt) {
+          var cursor = evt.target.result
+          if (cursor) {
+            let kw = ((cursor.value.data || {}).keywords || [])
+            let title = ((cursor.value.data || {}).title || '')
+            if (kw.join().toLowerCase().includes(keyword.toLowerCase()) || title.toLowerCase().includes(keyword.toLowerCase())) {
+              results.push(cursor.value)
+            }
+            cursor.continue()
+          } else {
+            resolve(results)
+          }
+        }
+      })
+    })
+  }
 }

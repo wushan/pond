@@ -6,7 +6,7 @@
           figure.brand
             img(src="~/assets/images/logo.svg")
       .col.searchBox
-        input.input(type="text", placeholder="Search a fish.", v-model="keyword")
+        searchComponent
       .col.userBox
         p user
       .col.importBox
@@ -15,14 +15,14 @@
 
 <script>
 import importerComponent from '~/components/importerComponent'
+import searchComponent from '~/components/searchComponent'
 export default {
   components: {
-    importerComponent
+    importerComponent,
+    searchComponent
   },
   data () {
-    return {
-      keyword: ''
-    }
+    return {}
   }
 }
 </script>
