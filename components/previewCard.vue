@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #previewCard {
   transition: .3s all ease;
   max-width: 300px;

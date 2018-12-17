@@ -8,7 +8,8 @@
       .col.searchBox
         searchComponent
       .col.userBox
-        p user
+        p user: {{$auth.loggedIn}}
+        button.button(@click="logout") Logout
       .col.importBox
         importerComponent
 </template>
@@ -23,6 +24,14 @@ export default {
   },
   data () {
     return {}
+  },
+  methods: {
+    async logout() {
+      await this.$auth.logout()
+      let pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/
+      let patterns = pattern.exec(window.location.href)
+      window.location.href = 'https://ponds.auth0.com/v2/logout?returnTo=' + patterns[1] + patterns[2]
+    }
   }
 }
 </script>

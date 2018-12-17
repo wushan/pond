@@ -2,39 +2,51 @@
 #wrapper
   appHeader
   #appContent
-    transition(name="fade", mode="out-in")
-      #previewNotification(v-if="previewContent")
-        .previewNotificationInner
-          previewCard(:source="previewContent")
-    nuxt
+    .appContentInner
+      p {{getNeverLogin}}
+      transition(name="fade", mode="out-in")
+        #previewNotification(v-if="previewContent")
+          .previewNotificationInner
+            previewCard(:source="previewContent")
+      loginPanel(v-if="!$auth.loggedIn || getNeverLogin")
+      nuxt
 </template>
 <script>
 import appHeader from '~/components/appHeader'
 import previewCard from '~/components/previewCard'
+import loginPanel from '~/components/loginPanel'
 import { mapGetters } from 'vuex'
 export default {
   components: {
     appHeader,
-    previewCard
+    previewCard,
+    loginPanel
   },
   computed: {
     ...mapGetters({
       previewContent: 'app/getPreviewContent',
-      isLoading: 'app/isLoading'
+      isLoading: 'app/isLoading',
+      getNeverLogin: 'app/getNeverLogin'
     })
   }
 }
 </script>
 
 <style lang="scss">
-html, body, #wrapper {
+html, body, #__nuxt, #__layout, #wrapper {
   background-color: #f7f7f7;
   height: 100%;
 }
 #appContent {
-  padding-top: 83px;
-  padding-left: 1em;
-  padding-right: 1em;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  .appContentInner {
+    padding-top: 83px;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 #previewNotification {
   position: absolute;

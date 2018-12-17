@@ -13,11 +13,13 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.0.0",
     "@nuxtjs/bulma": "^1.2.0",
     "@nuxtjs/font-awesome": "^1.0.3",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
+    "breakpoint-sass": "^2.7.1",
     "cheerio": "^1.0.0-rc.2",
     "cross-env": "^5.2.0",
     "express": "^4.16.3",
@@ -39,8 +41,7 @@
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
-    "short-uuid": "^3.0.1",
-    "breakpoint-sass": "^2.7.1"
+    "short-uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

@@ -1,10 +1,14 @@
 export const state = () => ({
   recordCache: [],
   previewContent: null,
-  isLoading: false
+  isLoading: false,
+  neverLogin: false
 })
 
 export const mutations = {
+  setNeverLogin (state, data) {
+    state.neverLogin = data
+  },
   setIsLoading (state, data) {
     state.isLoading = data
   },
@@ -31,5 +35,8 @@ export const getters = {
   },
   getRecordCache (state) {
     return state.recordCache
+  },
+  getNeverLogin (state) {
+    return state.neverLogin
   }
 }

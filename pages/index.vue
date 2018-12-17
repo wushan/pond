@@ -1,7 +1,7 @@
 <template lang="pug">
   #home
     .container
-      transition-group.columns.is-mobile.is-multiline.is-variable.is-2(name="transform", tag="div")
+      transition-group.columns.is-mobile.is-multiline.is-variable.is-2(name="transform", tag="div", mode="out-in")
         .column.is-6-mobile.is-4-tablet.is-2-desktop(v-for="record of getRecordCache", :key="record.sid")
           previewCard(:source="record.data")
 </template>

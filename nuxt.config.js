@@ -29,7 +29,20 @@ module.exports = {
   css: [
     '~/assets/styles/main.scss'
   ],
-
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/callback',
+      home: '/'
+    },
+    strategies: {
+      auth0: {
+        domain: 'ponds.auth0.com',
+        client_id: 'YdPu2lHii70HUTAXAuQ0ekwN5YPaMjJ7'
+      }
+    }
+  },
   /*
   ** Plugins to load before mounting the App
   */
@@ -42,6 +55,7 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
     '@nuxtjs/font-awesome'
@@ -55,7 +69,9 @@ module.exports = {
     browserBaseURL: '/',
     https: true
   },
-
+  router: {
+    middleware: ['auth']
+  },
   /*
   ** Build configuration
   */
