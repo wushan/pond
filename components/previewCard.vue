@@ -5,6 +5,9 @@
         a(:href="source.url", target="_blank")
           figure.image
             img(:src="source.image")
+        .card-status
+          i.fa.fa-refresh
+
       .card-content
         time.time {{source.date}}
         a.card-title(:href="source.url", target="_blank")
@@ -18,7 +21,7 @@
       .card-footer(v-if="footer")
         .button-group
           a.button.secondary DELETE
-          a.button.edit REFRESH
+          a.button.edit REFETCH
           a.button.primary COPY
     .card.invalid(v-else)
       .card-image
@@ -65,7 +68,7 @@ export default {
 #previewCard {
   transition: .3s all ease;
   background-color: $white;
-  border-radius: 9px;
+  border-radius: $border-radius;
   // overflow: hidden;
   box-shadow: 0 0px 3px rgba(0,0,0,0.33);
   &:hover {

@@ -45,7 +45,7 @@ export default {
   align-items: center;
   .loginPanelInner {
     background-color: $white;
-    border-radius: 9px;
+    border-radius: $border-radius;
     .title {
       font-size: 1.6em;
       font-weight: 400;

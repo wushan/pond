@@ -19,17 +19,29 @@
       left: 0;
       right: 0;
       bottom: 0;
+      border-radius: $border-radius;
       background-color: rgba($darkgray, .63);
     }
   }
   .card-image {
-    // background-color: $darkestgray;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    position: relative;
+    overflow: hidden;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#45484d+0,000000+100;Black+3D+%231 */
     background: #45484d; /* Old browsers */
     background: -moz-radial-gradient(center, ellipse cover, #45484d 0%, #000000 100%); /* FF3.6-15 */
     background: -webkit-radial-gradient(center, ellipse cover, #45484d 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
     background: radial-gradient(ellipse at center, #45484d 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    .card-status {
+      color: $darkgray;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0.5em 1em;
+      opacity: 0.5;
+    }
     a {
       display: block;
     }
