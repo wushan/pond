@@ -66,7 +66,7 @@ export default {
   transition: .3s all ease;
   background-color: $white;
   border-radius: 9px;
-  overflow: hidden;
+  // overflow: hidden;
   box-shadow: 0 0px 3px rgba(0,0,0,0.33);
   &:hover {
     box-shadow: 0 3px 12px rgba(0,0,0,0.33);

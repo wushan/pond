@@ -75,7 +75,7 @@ h1 {
   transition: .3s all ease;
   .pin {
     transition: .3s all ease;
-    padding: 0.5em 0;
+    padding: 0.2em 0;
     margin: 0 0.125em 1em;
     -moz-page-break-inside: avoid;
     -webkit-column-break-inside: avoid;

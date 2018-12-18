@@ -1,15 +1,15 @@
 <template lang="pug">
   #loginPanel
-    .loginPanelInner
-      .card
-        //- header.card-header
-        //-   .card-header-title Sign In
-        .card-content
-          .title We can keep your fishes(bookmarks) updated cross platform.
-          .subtitle Or, data will be saved in the browser.
-        footer.card-footer
-          a.card-footer-item(@click="neverLogin") No Thanks
-          a.card-footer-item(@click="login") Sign in with Auth0
+    .loginPanelInner.restrict-tiny
+      .loginPanelHeader
+        .title
+          span PONDS
+          |  keeps your fishes ( bookmarks ) updated and find them back anytime, any where.
+        .subtitle Or, data will be saved in the browser.
+        .meta * data will be sync to our server automatically, defaults to visible in public, check privacy settings if this isn't what you want after login.
+      .button-group
+        a.button.warning(@click="neverLogin") No Thanks
+        a.button.primary(@click="login") Sign in with Auth0
     //- .loginPanelInner
     //-   .title Sign In
     //-   p we can keep your fishes(bookmarks) updated cross platform.
@@ -31,6 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~assets/styles/lib/var';
 #loginPanel {
   position: absolute;
   top: 0;
@@ -43,8 +44,38 @@ export default {
   justify-content: center;
   align-items: center;
   .loginPanelInner {
-    max-width: 400px;
-    padding: 1em;
+    background-color: $white;
+    border-radius: 9px;
+    .title {
+      font-size: 1.6em;
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+      span {
+        font-weight: 900;
+      }
+    }
+    .subtitle {
+      margin: 1em 0;
+      color: $darkestgray;
+    }
+    .meta {
+      font-size: 12px;
+      color: $darkgray;
+    }
+  }
+  .loginPanelHeader {
+    padding: 1em 1.5em;
+  }
+  .loginPanelFooter {
+    border-top: 4px solid $lightgray;
+    // display: flex;
+    // .login-footer-item {
+    //   flex: 1;
+    //   padding: 0.5em 1.5em;
+    //   display: block;
+    //   cursor: pointer;
+    // }
   }
 }
 </style>

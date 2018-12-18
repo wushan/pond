@@ -1,8 +1,8 @@
 .card {
+  position: relative;
   &:hover {
     .card-footer {
-      // height: 2.4em;
-      // font-size: 16px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.33);
       .button {
         font-size: inherit;
         height: inherit;
@@ -20,11 +20,6 @@
       right: 0;
       bottom: 0;
       background-color: rgba($darkgray, .63);
-    }
-    &:hover {
-      &:before {
-        bottom: 36px;
-      }
     }
   }
   .card-image {
@@ -90,7 +85,16 @@
   }
 }
 .card-footer {
-  border-top: 4px solid $lightgray;
+  position: absolute;
+  top: calc(100% - 0.5em);
+  left: 0;
+  right: 0;
+  border-top: 0;
+  z-index: 1;
+  box-shadow: 0 0px 3px rgba(0,0,0,0.33);
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  overflow: hidden;
   .button {
     transition: .3s all ease;
     font-size: 0;

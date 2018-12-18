@@ -5,7 +5,7 @@
         nuxt-link.brand(to="/")
           figure
             img(src="~/assets/images/logo.svg")
-          .title POUNDS
+          .title PONDS
       .col.searchBox
         searchComponent
       .col.userBox(v-if="$auth.loggedIn")
@@ -138,18 +138,17 @@ export default {
   }
   .userAvatar {
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border: 2px solid rgba(#63a5df, .33);
     overflow: hidden;
     position: relative;
     img {
       position: absolute;
       display: block;
-      left: 0;
-      top: 0;
-      right: 0;
-      max-width: 110%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%)
     }
   }
 }
