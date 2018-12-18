@@ -3,13 +3,14 @@
   appHeader
   #appContent
     .appContentInner
-      p {{getNeverLogin}}
       transition(name="fade", mode="out-in")
         #previewNotification(v-if="previewContent")
           .previewNotificationInner
-            previewCard(:source="previewContent")
-      loginPanel(v-if="!$auth.loggedIn || getNeverLogin")
+            previewCard(:source="previewContent", :footer="false")
+      loginPanel(v-if="!$auth.loggedIn && !getNeverLogin")
       nuxt
+    .appFooter
+      .meta Designed With Love.
 </template>
 <script>
 import appHeader from '~/components/appHeader'
@@ -33,6 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~assets/styles/lib/var';
 html, body, #__nuxt, #__layout, #wrapper {
   background-color: #f7f7f7;
   height: 100%;
@@ -61,5 +63,11 @@ html, body, #__nuxt, #__layout, #wrapper {
   .previewNotificationInner {
     padding: 1.5em;
   }
+}
+.appFooter {
+  font-size: 12px;
+  text-align: center;
+  padding: 2em 0;
+  color: $darkestgray;
 }
 </style>

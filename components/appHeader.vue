@@ -2,14 +2,19 @@
   #appHeader
     .appHeaderInner.container
       .col.brand-wrapper
-        nuxt-link(to="/")
-          figure.brand
+        nuxt-link.brand(to="/")
+          figure
             img(src="~/assets/images/logo.svg")
+          .title POUNDS
       .col.searchBox
         searchComponent
-      .col.userBox
-        p user: {{$auth.loggedIn}}
-        button.button(@click="logout") Logout
+      .col.userBox(v-if="$auth.loggedIn")
+        .userAvatar(@click="toggleMenu")
+          img(:src="$auth.user.picture")
+        .userSubMenu(:class="{ active: menu }")
+          ul
+            li
+              a(@click="logout") Logout
       .col.importBox
         importerComponent
 </template>
@@ -23,7 +28,9 @@ export default {
     searchComponent
   },
   data () {
-    return {}
+    return {
+      menu: false
+    }
   },
   methods: {
     async logout() {
@@ -31,12 +38,16 @@ export default {
       let pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/
       let patterns = pattern.exec(window.location.href)
       window.location.href = 'https://ponds.auth0.com/v2/logout?returnTo=' + patterns[1] + patterns[2]
+    },
+    toggleMenu () {
+      this.menu = !this.menu
     }
   }
 }
 </script>
 
 <style lang="scss">
+@import '~assets/styles/lib/var';
 @import '~breakpoint-sass/stylesheets/_breakpoint';
 #appHeader {
   background: #fff;
@@ -59,25 +70,23 @@ export default {
     flex: 1;
     display: flex;
     align-items: center;
+    padding: 0 0.5em;
     .col {
       display: flex;
-      flex: 1;
+      // flex: 1;
       align-items: center;
-      padding: 0 0.2em;
+      padding: 0.8em;
       &.brand-wrapper {
-        max-width: 46px;
+        // max-width: 46px;
       }
       &.searchBox {
-        min-width: 40%;
+        // min-width: 10%;
+        flex: 1;
       }
       &.userBox {
-        max-width: 46px;
+        // max-width: 46px;
       }
-      &.importBox {
-        @include breakpoint(768px) {
-          max-width: 200px;
-        }
-      }
+      &.importBox {}
     }
   }
   .brand {
@@ -85,11 +94,62 @@ export default {
     align-items: center;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
     img {
       max-height: 36px;
       width: auto;
       max-width: auto;
       display: block;
+    }
+    .title {
+      display: none;
+    }
+    @include breakpoint(768px) {
+      .title {
+        display: block;
+        margin-left: 0.8em;
+        font-weight: 900;
+        color: $black;
+        font-size: 1.4em;
+      }
+    }
+  }
+  .userBox {
+    .userSubMenu {
+      display: none;
+      position: absolute;
+      right: 0.5em;
+      top: 3em;
+      background-color: white;
+      padding: 1em;
+      box-shadow: 1px 1px 3px rgba(black, .33);
+      border-radius: 3px;
+      ul {
+        li {
+          a {
+            cursor: pointer;
+          }
+        }
+      }
+      &.active {
+        display: block;
+      }
+    }
+  }
+  .userAvatar {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(#63a5df, .33);
+    overflow: hidden;
+    position: relative;
+    img {
+      position: absolute;
+      display: block;
+      left: 0;
+      top: 0;
+      right: 0;
+      max-width: 110%;
     }
   }
 }

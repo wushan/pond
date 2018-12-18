@@ -1,0 +1,49 @@
+.page-enter-active, .page-leave-active {
+  transition: opacity .3s;
+}
+.page-enter, .page-leave-to {
+  opacity: 0;
+}
+
+.grow-enter-active, .grow-leave-active {
+  transition: .1s all ease-out;
+}
+.grow-enter, .grow-leave-active {
+  // height: 0;
+  padding: 0;
+  border: 0;
+  // font-size: 0;
+  filter: blur(10px);
+  transform: scaleY(0) scaleX(0.95);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: .3s all ease-out;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+
+
+// Loading Placeholder
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+.animated-background {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1440px 104px;
+  height: 24px;
+  position: relative;
+}

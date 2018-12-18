@@ -29,15 +29,21 @@ module.exports = class Resolver {
   resolve () {
     return new Promise((resolve, reject) => {
       (async () => {
-        const { body: html, url } = await got(this.resolved.url)
-        const $ = cheerio.load(html)
-        let texts = $('body').text()
-        var keywords = nodejieba.extract(texts, 4).map((a, b) => {
-          return a.word
-        })
-        const metadata = await metascraper({ html, url })
-        let finalResult = Object.assign(this.resolved, metadata, { keywords: keywords })
-        resolve(finalResult)
+        try {
+          const { body: html, url } = await got(this.resolved.url, {
+            timeout: 3000
+          })
+          const $ = cheerio.load(html)
+          let texts = $('body').text()
+          var keywords = nodejieba.extract(texts, 4).map((a, b) => {
+            return a.word
+          })
+          const metadata = await metascraper({ html, url })
+          let finalResult = Object.assign(this.resolved, metadata, { keywords: keywords })
+          resolve(finalResult)
+        } catch(error) {
+          reject(error)
+        }
       })()
     })
   }

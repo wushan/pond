@@ -1,0 +1,64 @@
+table {
+  border-spacing: 0;
+  th, td {
+    padding: .5em;
+  }
+  &.bordered {
+    border-top: 1px solid $darkgray;
+    border-left: 1px solid $darkgray;
+    th, td {
+      border-right: 1px solid $darkgray;
+      border-bottom: 1px solid $darkgray;
+    }
+  }
+  &.compact {
+    font-size: 14px;
+    tr {
+      // bosx-shadow: 0 3px 12px -3px rgba($black, .33);
+      // border-bottom: 1px solid $gray;
+    }
+    thead {
+      th {
+        padding: 1em 0;
+      }
+    }
+    th {
+      background-color: $smokygray;
+      border-bottom: 1px solid $lightgray;
+      border-right: 1px solid $lightgray;
+      font-weight: bold;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+    td {
+      background-color: $white;
+      border-bottom: 1px solid $lightgray;
+      word-break: break-all;
+    }
+    th {
+      text-transform: uppercase;
+    }
+  }
+  &.full {
+    width: 100%;
+  }
+}
+.table {
+  width: 100%;
+}
+@media screen and (max-width: 800px) { .is-responsive { width: 100%; border-collapse: collapse; border-spacing: 0; display: block; position: relative; }
+  .is-responsive td:empty:before { content: " "; }
+  .is-responsive th, .is-responsive td { margin: 0; vertical-align: top; }
+  .is-responsive th { text-align: left; }
+  .is-responsive thead { border-right: solid 2px #dbdbdb; display: block; float: left; }
+  .is-responsive thead tr { display: block; padding: 0 10px 0 0; }
+  .is-responsive thead tr th::before { content: " "; }
+  .is-responsive thead td, .is-responsive thead th { border-width: 0 0 1px; }
+  .is-responsive tbody { display: block; width: auto; position: relative; overflow-x: auto; white-space: nowrap; }
+  .is-responsive tbody tr { display: inline-block; vertical-align: top; }
+  .is-responsive th { display: block; text-align: right; }
+  .is-responsive td { display: block; min-height: 1.25em; text-align: left; }
+  .is-responsive th:last-child, .is-responsive td:last-child { border-bottom-width: 0; }
+  .is-responsive tr:last-child td:not(:last-child) { border: 1px solid #dbdbdb; border-width: 0 0 1px; }
+  .is-responsive.is-bordered td, .is-responsive.is-bordered th { border-width: 1px; }
+  .is-responsive.is-bordered tr td:last-child, .is-responsive.is-bordered tr th:last-child { border-bottom-width: 1px; } }

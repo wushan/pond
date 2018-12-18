@@ -1,9 +1,10 @@
 <template lang="pug">
   #home
     .container
-      transition-group.columns.is-mobile.is-multiline.is-variable.is-2(name="transform", tag="div", mode="out-in")
-        .column.is-6-mobile.is-4-tablet.is-2-desktop(v-for="record of getRecordCache", :key="record.sid")
-          previewCard(:source="record.data")
+      .waterfall
+        //- transition-group.columns.is-mobile.is-multiline.is-variable.is-2(name="transform", tag="div", mode="out-in")
+        .pin(v-for="record of getRecordCache", :key="record.sid")
+          previewCard(:source="record.data", :id="record.sid")
 </template>
 
 <script>
@@ -51,29 +52,8 @@ export default {
 </script>
 
 <style lang="scss">
-.restrict-tiny {
-  max-width: 320px;
-  margin: auto;
-}
-.container {
-  // margin-bottom: 1em;
-}
-.image {
-  height: 0;
-  overflow: hidden;
-  padding-top: 56.25%;
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-}
 .title {
   word-break: break-all;
-}
-.card-image {
-  background-color: #f7f7f7;
 }
 h1 {
   text-align: center;
@@ -86,6 +66,20 @@ h1 {
     max-width: 120px;
     display: block;
     margin: auto;
+  }
+}
+.waterfall {
+  column-count: 6;
+  column-width: 18em;
+  column-gap: 1em;
+  transition: .3s all ease;
+  .pin {
+    transition: .3s all ease;
+    padding: 0.5em 0;
+    margin: 0 0.125em 1em;
+    -moz-page-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
   }
 }
 </style>

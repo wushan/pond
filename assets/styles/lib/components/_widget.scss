@@ -1,0 +1,99 @@
+.card {
+  &:hover {
+    .card-footer {
+      // height: 2.4em;
+      // font-size: 16px;
+      .button {
+        font-size: inherit;
+        height: inherit;
+      }
+    }
+  }
+  &.invalid {
+    position: relative;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba($darkgray, .63);
+    }
+    &:hover {
+      &:before {
+        bottom: 36px;
+      }
+    }
+  }
+  .card-image {
+    // background-color: $darkestgray;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#45484d+0,000000+100;Black+3D+%231 */
+    background: #45484d; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #45484d 0%, #000000 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, #45484d 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, #45484d 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    a {
+      display: block;
+    }
+    figure {
+      height: 0;
+      overflow: hidden;
+      padding-top: 50.25%;
+      position: relative;
+      img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.33);
+        pointer-events: none;
+        max-width: 105%;
+      }
+    }
+  }
+  .card-content {
+    padding: 0.5em 1.5em;
+  }
+  .card-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.25em;
+    color: $black;
+    font-weight: 700;
+    figure {
+      max-width: 36px;
+      margin-right: 1em;
+    }
+    .title {
+      flex: 1;
+    }
+  }
+  .card-description {
+    color: $darkgray;
+    p {
+      font-size: 0.9em;
+      text-indent: 2em;
+    }
+  }
+  time {
+    font-size: 12px;
+    color: $darkgray;
+    display: block;
+    margin: 0.5em 0;
+    letter-spacing: 0.05em;
+    text-align: right;
+  }
+}
+.card-footer {
+  border-top: 4px solid $lightgray;
+  .button {
+    transition: .3s all ease;
+    font-size: 0;
+    height: 0;
+  }
+}

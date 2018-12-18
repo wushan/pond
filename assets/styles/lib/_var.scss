@@ -1,0 +1,30 @@
+$gray: #dddddd;
+$smokygray: #f7f7f7;
+$lightgray: #eeeeee;
+$darkgray: darken($gray, 40%);
+$darkestgray: #1a1a1a;
+$white: #ffffff;
+$black: #000000;
+$red: rgb(230,27,88);
+$pink: rgb(230,27,88);
+// $purple: #483962;
+$purple: rgb(63,50,87);
+$lightpurple: #7066AE;
+$deepblue: #333C41;
+$green: #0CBF89;
+$lightgreen: #94FF1B;
+$bluegreen: #50E3C2;
+$solidlightblue: #7DE7FB;
+$lightblue: #73D3FF;
+$blue: #0ac1e2;
+$darkblue: #3b78e7;
+$yellow: #F8E81C;
+$orange: #FFA502;
+
+$primary: $darkblue;
+$secondary: $orange;
+
+
+// SIZE
+$input-height: 40px;
+$border-radius: 6px;

@@ -6,30 +6,50 @@
           figure.image
             img(:src="source.image")
       .card-content
-        .media
-          .media-left
-            a(:href="source.url", target="_blank")
-              figure.image.is-48x48
-                img(:src="source.logo")
-          .media-content
-            p.title.is-6
-              a(:href="source.url", target="_blank") {{source.title}}
-        .content(v-if="detail")
-          p.description {{source.description}}
-          time.time {{source.date}}
+        time.time {{source.date}}
+        a.card-title(:href="source.url", target="_blank")
+          figure
+            img(:src="source.logo")
+          .title {{source.title}}
+        .card-description
+          p {{source.description}}
           .tags
             span.tag(v-for="tag of source.keywords") {{tag}}
-    //- p {{source}}
+      .card-footer(v-if="footer")
+        .button-group
+          a.button.secondary DELETE
+          a.button.edit REFRESH
+          a.button.primary COPY
+    .card.invalid(v-else)
+      .card-image
+        figure.image
+          //- img(src="https://via.placeholder.com/720x480?text=Invalid+Record")
+      .card-content
+        a.card-title
+          .title Invalid Record
+        .card-description
+          p This is an invalid record ({{ id }})
+      .card-footer(v-if="footer")
+        .button-group
+          a.button.secondary DELETE
 </template>
 
 <script>
 export default {
   props: {
+    id: {
+      type: String,
+      default: ''
+    },
     source: {
       type: Object,
       default () {
         return null
       }
+    },
+    footer: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -41,35 +61,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~assets/styles/lib/var';
 #previewCard {
   transition: .3s all ease;
-  max-width: 300px;
+  background-color: $white;
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: 0 0px 3px rgba(0,0,0,0.33);
   &:hover {
     box-shadow: 0 3px 12px rgba(0,0,0,0.33);
   }
-}
-.time {
-  font-size: 12px;
-  color: gray;
-  display: block;
-  height: 1.4em;
-}
-.tags {
-  margin: .5em 0;
-}
-.image {
-  background-color: #f7f7f7;
-}
-.title {
-  height: 3.4em;
-  overflow: hidden;
-}
-.description {
-  color: gray;
-  font-size: .8em;
-  line-height: 1.4;
-  height: 8em;
-  overflow: hidden;
-  word-break: break-all;
 }
 </style>

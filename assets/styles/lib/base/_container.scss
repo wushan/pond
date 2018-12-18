@@ -1,0 +1,28 @@
+.container {
+  // padding: 1em;
+  box-sizing: border-box;
+}
+.restrict {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.restrict-tiny {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+
+.headbar {
+  background-color: $purple;
+  color: $white;
+  padding: 1em;
+  h1, h2, h3, h4 {
+    font-weight: 100;
+    margin: 0;
+  }
+}
+
+.origin-top {
+  transform-origin: center top;
+}

@@ -1,0 +1,109 @@
+.controlgroup {
+  margin-bottom: 1em;
+  & > label {
+    height: $input-height;
+    line-height: $input-height;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    display: block;
+  }
+  .controls {
+    flex: 1;
+    // 子層 label
+    label {
+      span {
+        font-size: 12px;
+        text-align: center;
+        font-weight: bold;
+        display: block;
+        margin-bottom: .5em;
+        color: $darkgray;
+      }
+      input {
+        text-align: center;
+      }
+    }
+  }
+}
+input[type=text], input[type=number], input[type=email], input[type=password], input[type=datetime-local] {
+  transition: .3s all ease;
+  display: block;
+  // box-shadow: inset 0 0px 3px 0px rgba($black, .33);
+  border: 1px solid $lightgray;
+  height: $input-height;
+  line-height: $input-height;
+  border-radius: $border-radius;
+  outline: none;
+  padding: 0 1em;
+  width: 100%;
+  &:hover {
+    border: 1px solid rgba($primary, .33);
+    // box-shadow: inset 1px 1px 3px 0px rgba($black, .33);
+  }
+  &:focus {
+    border: 1px solid $primary;
+    // box-shadow: inset 1px 1px 3px 0px rgba($black, .33);
+  }
+  &.error {
+    border: 2px solid $red;
+    color: $red;
+  }
+}
+
+.call-action {
+
+}
+
+.select-wrapper {
+  height: $input-height;
+  transition: .3s all ease;
+  box-shadow: 0 1px 3px -2px rgba($black, .33);
+  border-radius: $border-radius;
+  background-color: $white;
+  position: relative;
+  &:after {
+    content: '\f2f9';
+    font: normal normal normal 14px/1 "Material-Design-Iconic-Font";
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    margin-top: -.5em;
+    pointer-events: none;
+  }
+  select {
+    width: 100%;
+    padding: 0 1em;
+    border-radius: $border-radius;
+    height: $input-height;
+    line-height: $input-height;
+    color: $black;
+    background-color: $white;
+    border: 0;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  &.error {
+    border: 2px solid $red;
+    color: $red;
+  }
+}
+textarea {
+  transition: .3s all ease;
+  display: block;
+  box-shadow: 0 1px 3px -2px rgba($black, .33);
+  border: 0;
+  border-color: $lightgray;
+  height: $input-height * 4;
+  line-height: $input-height - 10;
+  border-radius: $border-radius;
+  outline: none;
+  padding: .5em 1em;
+  width: 100%;
+}
+table {
+  text-align: center;
+}

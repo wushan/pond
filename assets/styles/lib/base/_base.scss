@@ -1,0 +1,25 @@
+html {
+  background-color: $smokygray;
+}
+html {
+  box-sizing: border-box;
+}
+
+figure {
+  margin: 0;
+}
+
+* {
+  box-sizing: inherit;
+  &:before, &:after {
+    box-sizing: inherit;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+}
+@import './typography';
+@import './container';

@@ -1,0 +1,21 @@
+.tag {
+  // display: inline-block;
+  // vertical-align: middle;
+  display: block;
+  background-color: $lightgray;
+  color: $darkgray;
+  text-shadow: 1px 1px rgba($gray, 0.5);
+  padding: .5em 1em;
+  border-radius: 6px;
+  min-width: 30px;
+  margin: 0 .25em;
+  text-align: center;
+  font-size: 12px;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  .tag {
+    margin-bottom: .5em;
+  }
+}
