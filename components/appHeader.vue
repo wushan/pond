@@ -9,7 +9,7 @@
       .col.searchBox
         searchComponent
       .col.userBox(v-if="$auth.loggedIn")
-        .userAvatar(@click="toggleMenu")
+        .userAvatar(@click="toggleMenu", :class="{ inactive: menu }")
           img(:src="$auth.user.picture")
         .userSubMenu(:class="{ active: menu }")
           ul
@@ -73,7 +73,7 @@ export default {
     padding: 0 0.5em;
     .col {
       display: flex;
-      // flex: 1;
+      position: relative;
       align-items: center;
       padding: 0.8em;
       &.brand-wrapper {
@@ -118,16 +118,48 @@ export default {
     .userSubMenu {
       display: none;
       position: absolute;
-      right: 0.5em;
-      top: 3em;
+      right: 0.8em;
+      top: 4em;
       background-color: white;
-      padding: 1em;
       box-shadow: 1px 1px 3px rgba(black, .33);
       border-radius: 3px;
+      &:before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 6px 6px 6px;
+        border-color: transparent transparent $white transparent;
+        position: absolute;
+        right: 14px;
+        top: -6px;
+        z-index: 2;
+      }
+      &:after {
+        content: '';
+        box-shadow: 1px 1px 3px rgba(black, .33);
+        width: 8px;
+        height: 8px;
+        z-index: 1;
+        position: absolute;
+        right: 16px;
+        top: -5px;
+        transform-origin: center center;
+        transform: rotate(45deg);
+      }
       ul {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        padding: 0;
+        background-color: $white;
+        list-style-type: none;
         li {
           a {
+            padding: 0.5em 1em;
             cursor: pointer;
+            display: block;
+            color: $primary;
           }
         }
       }
@@ -140,15 +172,29 @@ export default {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    border: 2px solid rgba(#63a5df, .33);
+    border: 2px solid rgba($primary, .33);
     overflow: hidden;
     position: relative;
+    transition: .3s all ease;
+    cursor: pointer;
     img {
       position: absolute;
       display: block;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%)
+    }
+    &.inactive {
+      border: 2px solid rgba($gray, 1);
+      img {
+        filter: saturate(0);
+      }
+      &:hover {
+        border: 2px solid rgba($darkgray, 1);
+      }
+    }
+    &:hover {
+      border: 2px solid rgba($primary, 1);
     }
   }
 }

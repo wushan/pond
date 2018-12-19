@@ -69,7 +69,7 @@ export default {
       getSearchText: 'app/getSearchText'
     }),
     preview () {
-      return this.source.data
+      return this.source.data || this.source
     }
   },
   methods: {
@@ -81,7 +81,6 @@ export default {
       if (this.getSearchText.split('').length >= 2) {
         let searchText = this.getSearchText
         let re = new RegExp(searchText, 'gi')
-        // '<span class=highlight>' + this.getSearchText + '</span>'
         return content.replace(re, this.replacer)
       } else {
         return content
