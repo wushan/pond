@@ -2,9 +2,9 @@
   #home
     .container
       .waterfall
-        //- transition-group.columns.is-mobile.is-multiline.is-variable.is-2(name="transform", tag="div", mode="out-in")
-        .pin(v-for="record of getRecordCache", :key="record.sid")
-          previewCard(:source="record.data", :id="record.sid")
+        transition-group(name="transform", tag="div", mode="out-in")
+          .pin(v-for="record of getRecordCache", :key="record.sid")
+            previewCard(:source="record", :id="record.sid")
 </template>
 
 <script>

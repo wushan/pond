@@ -17,6 +17,7 @@ export default {
   },
   methods: {
     search (evt) {
+      this.$store.commit('app/setSearchText', evt.target.value)
       db.search(evt.target.value).then((res) => {
         this.$store.commit('app/resetRecordCache')
         this.$store.commit('app/setRecordCache', res)

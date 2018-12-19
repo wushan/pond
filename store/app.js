@@ -2,10 +2,14 @@ export const state = () => ({
   recordCache: [],
   previewContent: null,
   isLoading: false,
-  neverLogin: false
+  neverLogin: false,
+  searchText: ''
 })
 
 export const mutations = {
+  setSearchText (state, data) {
+    state.searchText = data
+  },
   setNeverLogin (state, data) {
     state.neverLogin = data
   },
@@ -27,6 +31,9 @@ export const mutations = {
 
 export const actions = {}
 export const getters = {
+  getSearchText (state) {
+    return state.searchText
+  },
   isLoading (state) {
     return state.isLoading
   },

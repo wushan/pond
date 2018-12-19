@@ -34,6 +34,7 @@
     background: -webkit-radial-gradient(center, ellipse cover, #45484d 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
     background: radial-gradient(ellipse at center, #45484d 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    transform-style: preserve-3d;
     .card-status {
       color: $darkgray;
       position: absolute;
@@ -72,6 +73,7 @@
     font-size: 1.25em;
     color: $black;
     font-weight: 700;
+    line-height: 1.4;
     figure {
       max-width: 36px;
       margin-right: 1em;

@@ -7,13 +7,13 @@
       .area
         input.input(type="text", placeholder="Paste url here", v-model="inputUrl", @input="fetchContent")
       .area(v-if="inputUrl")
+        button.button.warning(@click="discard")
+          span.icon
+            i.fa.fa-trash-o
+      .area(v-if="inputUrl && isValid")
         button.button(@click="add")
           span.icon
             i.fa.fa-plus-square-o
-      .area(v-if="inputUrl")
-        button.button.is-danger(@click="discard")
-          span.icon
-            i.fa.fa-trash-o
       .area(v-if="isLoading")
         span.icon
           i.fa.fa-spinner.fa-pulse
@@ -33,7 +33,8 @@ export default {
     return {
       inputUrl: '',
       fetchedData: null,
-      expand: false
+      expand: false,
+      isValid: false
     }
   },
   computed: {
@@ -59,9 +60,11 @@ export default {
         this.$axios.post('/api/fetchContent', {url: this.inputUrl}).then((res) => {
           this.$store.commit('app/setIsLoading', false)
           this.$store.commit('app/setPreviewContent', res.data)
+          this.isValid = true
         }).catch((err) => {
           this.$store.commit('app/setIsLoading', false)
           this.$store.commit('app/setPreviewContent', null)
+          this.isValid = false
           console.log(err.message)
         })
       } else {
@@ -74,7 +77,7 @@ export default {
       if (!this.previewContent) {
         return
       } else {
-        db.insert('tony@simbo.com.tw', 'default', this.previewContent).then((result) => {
+        db.insert(this.$auth.user.email, 'default', this.previewContent).then((result) => {
           this.$store.commit('app/setRecordCache', [result])
           this.$store.commit('app/setPreviewContent', null)
         })

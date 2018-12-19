@@ -52,7 +52,7 @@ html, body, #__nuxt, #__layout, #wrapper {
 }
 #previewNotification {
   position: absolute;
-  top: 50px;
+  top: 60px;
   bottom: 0;
   right: 0;
   left: 0;

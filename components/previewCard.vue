@@ -1,23 +1,25 @@
 <template lang="pug">
   #previewCard
-    .card(v-if="source")
+    .card(v-if="preview")
       .card-image
-        a(:href="source.url", target="_blank")
+        a(:href="preview.url", target="_blank")
           figure.image
-            img(:src="source.image")
+            img(:src="preview.image")
         .card-status
           i.fa.fa-refresh
 
       .card-content
-        time.time {{source.date}}
-        a.card-title(:href="source.url", target="_blank")
+        time.time
+          span(v-if="preview.date") {{formatDate(preview.date)}} /
+          |  Added: {{formatDateFromStamp(source.created)}}
+        a.card-title(:href="preview.url", target="_blank")
           figure
-            img(:src="source.logo")
-          .title {{source.title}}
+            img(:src="preview.logo")
+          .title(v-html="matchSearch(preview.title)")
         .card-description
-          p {{source.description}}
+          p(v-html="matchSearch(preview.description)")
           .tags
-            span.tag(v-for="tag of source.keywords") {{tag}}
+            span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)")
       .card-footer(v-if="footer")
         .button-group
           a.button.secondary DELETE
@@ -38,6 +40,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import moment from 'moment'
 export default {
   props: {
     id: {
@@ -59,6 +63,36 @@ export default {
     return {
       detail: false
     }
+  },
+  computed: {
+    ...mapGetters({
+      getSearchText: 'app/getSearchText'
+    }),
+    preview () {
+      return this.source.data
+    }
+  },
+  methods: {
+    replacer(match, p1, p2, p3, offset, string) {
+      console.log(match, p1, p2, p3, offset, string)
+      return '<span class=highlight>' + match + '</span>'
+    },
+    matchSearch (content) {
+      if (this.getSearchText.split('').length >= 2) {
+        let searchText = this.getSearchText
+        let re = new RegExp(searchText, 'gi')
+        // '<span class=highlight>' + this.getSearchText + '</span>'
+        return content.replace(re, this.replacer)
+      } else {
+        return content
+      }
+    },
+    formatDate (date)  {
+      return moment(date).fromNow()
+    },
+    formatDateFromStamp (date) {
+      return moment(date, 'x').fromNow()
+    }
   }
 }
 </script>
@@ -70,6 +104,7 @@ export default {
   background-color: $white;
   border-radius: $border-radius;
   // overflow: hidden;
+  max-width: 26em;
   box-shadow: 0 0px 3px rgba(0,0,0,0.33);
   &:hover {
     box-shadow: 0 3px 12px rgba(0,0,0,0.33);
