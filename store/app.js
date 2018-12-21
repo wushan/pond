@@ -1,4 +1,11 @@
+import Database from '~/assets/utils/db'
+import { resolve } from 'path';
+import { rejects } from 'assert';
+let db = new Database('pounds', 'fish', 4)
 export const state = () => ({
+  config: {
+    syncTime: 5000
+  },
   recordCache: [],
   previewContent: null,
   isLoading: false,
@@ -24,12 +31,31 @@ export const mutations = {
       state.recordCache.unshift(record)
     }
   },
+  putRecordCache (state, data) {
+    state.recordCache.forEach((record, index) => {
+      if (record.sid === data.sid) {
+        state.recordCache.splice(index, 1, data)
+        console.log('put')
+      }
+    })
+  },
   resetRecordCache(state, data) {
     state.recordCache = state.recordCache.slice(0, 0)
   }
 }
 
-export const actions = {}
+export const actions = {
+  updateRecordCache({commit}, data) {
+    return new Promise((resolve, reject) => {
+      commit('putRecordCache', data)
+      db.put(data).then((res) => {
+        resolve()
+      }).catch((err) => {
+        reject()
+      })
+    })
+  }
+}
 export const getters = {
   getSearchText (state) {
     return state.searchText
@@ -45,5 +71,8 @@ export const getters = {
   },
   getNeverLogin (state) {
     return state.neverLogin
+  },
+  getConfig (state) {
+    return state.config
   }
 }

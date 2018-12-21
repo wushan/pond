@@ -44,7 +44,7 @@ export default {
     })
   },
   mounted () {
-    db = new Database('pounds', 'fish', 3)
+    db = new Database('pounds', 'fish', 4)
   },
   methods: {
     trigger () {
@@ -57,7 +57,7 @@ export default {
       let pattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
       if (pattern.test(this.inputUrl)) {
         this.$store.commit('app/setIsLoading', true)
-        this.$axios.post('/api/fetchContent', {url: this.inputUrl}).then((res) => {
+        this.$axios.post('/api/records/resolve', {url: this.inputUrl}).then((res) => {
           this.$store.commit('app/setIsLoading', false)
           this.$store.commit('app/setPreviewContent', res.data)
           this.isValid = true
@@ -77,9 +77,10 @@ export default {
       if (!this.previewContent) {
         return
       } else {
-        db.insert(this.$auth.user.email, 'default', this.previewContent).then((result) => {
+        db.insert(this.$auth.user.email, ['default'], this.previewContent).then((result) => {
           this.$store.commit('app/setRecordCache', [result])
           this.$store.commit('app/setPreviewContent', null)
+          this.inputUrl = ''
         })
       }
     },

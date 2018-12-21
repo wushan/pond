@@ -42,6 +42,9 @@
       left: 0;
       padding: 0.5em 1em;
       opacity: 0.5;
+      &.synced {
+        color: $green;
+      }
     }
     a {
       display: block;

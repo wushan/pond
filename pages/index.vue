@@ -24,7 +24,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getRecordCache: 'app/getRecordCache'
+      getRecordCache: 'app/getRecordCache',
+      getConfig: 'app/getConfig'
     })
   },
   watch: {
@@ -33,17 +34,55 @@ export default {
     }
   },
   mounted () {
-    db = new Database('pounds', 'fish', 3)
-    this.fecthHistory()
+    db = new Database('pounds', 'fish', 4)
+    this.fecthHistory().then(() => {
+      if (this.$auth.loggedIn) {
+        this.syncRecords()
+      }
+    })
   },
   methods: {
+    syncRecords () {
+      // 取出所有未同步的紀錄
+      db.getByQuery({
+        index: 'sync',
+        sync: 0
+      }).then((records) => {
+        if (records.length > 0) {
+          this.$axios.post('/api/records/sync', records).then((res) => {
+            // 同步成功後把這幾筆改成 synced
+            let updatedRecords = records.map((a, b) => {
+              a.sync = 1
+              return a
+            })
+            db.update(updatedRecords).then((res) => {
+              this.fecthHistory().then(() => {
+                setTimeout(() => {
+                  this.syncRecords()
+                }, this.getConfig.syncTime);
+              })
+            })
+          }).catch((err) => {
+            console.log(err)
+            this.fecthHistory().then(() => {
+              setTimeout(() => {
+                this.syncRecords()
+              }, this.getConfig.syncTime);
+            })
+          })
+        } else {
+          setTimeout(() => {
+            this.syncRecords()
+          }, this.getConfig.syncTime);
+        }
+      })
+    },
     accessBookMarks () {
       console.log(bookmarks)
     },
-    fecthHistory () {
-      // db.getRange()
+    async fecthHistory () {
       this.$store.commit('app/resetRecordCache')
-      db.getAll().then((res) => {
+      await db.getAll().then((res) => {
         this.$store.commit('app/setRecordCache', res)
       })
     }

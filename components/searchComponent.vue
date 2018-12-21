@@ -13,7 +13,7 @@ export default {
     }
   },
   mounted () {
-    db = new Database('pounds', 'fish', 3)
+    db = new Database('pounds', 'fish', 4)
   },
   methods: {
     search (evt) {

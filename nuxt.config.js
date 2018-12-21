@@ -61,10 +61,13 @@ module.exports = {
   /*
   ** Axios module configuration
   */
+  env: {
+    ENV_LOCATION: process.env.API_URL
+  },
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: '/',
-    browserBaseURL: '/',
+    baseURL: process.env.API_URL,
+    browserBaseURL: process.env.API_URL,
     https: true
   },
   router: {

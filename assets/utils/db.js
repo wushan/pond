@@ -46,6 +46,7 @@ export default class Database {
     objectStore.createIndex('sync', 'sync', { unique: false })
     objectStore.createIndex('indexed', 'indexed', { unique: false })
     objectStore.createIndex('created', 'created', { unique: false })
+    objectStore.createIndex('public', 'public', { unique: false })
   }
   insert(username, category, data) {
     return new Promise((resolve, reject) => {
@@ -60,7 +61,8 @@ export default class Database {
           data: data,
           sync: 0,
           indexed: 0,
-          created: moment().format('x')
+          created: moment().format('x'),
+          public: 1
         }
         var request = objectStore.add(record)
         request.onsuccess = function (evt) {
@@ -118,6 +120,29 @@ export default class Database {
             return a.created - b.created
           })
           resolve(result)
+        }
+      })
+    })
+  }
+  getByQuery(query, limit) {
+    return new Promise((resolve, reject) => {
+      if (limit === undefined) {
+        limit = 5
+      }
+      this.init().then(() => {
+        let transaction = this.db.transaction(this.objectStoreName, 'readonly')
+        let objectStore = transaction.objectStore(this.objectStoreName)
+        objectStore = objectStore.index(query.index)
+        let request = objectStore.openCursor(IDBKeyRange.only(query[query.index]), IDBCursor.NEXT)
+        let results = []
+        request.onsuccess = function (evt) {
+          var cursor = evt.target.result
+          if (cursor && results.length < limit) {
+            results.push(cursor.value)
+            cursor.continue()
+          } else {
+            resolve(results)
+          }
         }
       })
     })

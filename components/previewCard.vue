@@ -5,19 +5,21 @@
         a(:href="preview.url", target="_blank")
           figure.image
             img(:src="preview.image")
-        .card-status
-          i.fa.fa-refresh
+        .card-status(:class="{synced: source.sync === 1}")
+          i.fa.fa-check(v-if="source.sync === 1")
+          i.fa.fa-refresh(v-else)
 
       .card-content
         time.time
           span(v-if="preview.date") {{formatDate(preview.date)}} /
           |  Added: {{formatDateFromStamp(source.created)}}
-        a.card-title(:href="preview.url", target="_blank")
+        //- a.card-title(:href="preview.url", target="_blank")
+        a.card-title
           figure
             img(:src="preview.logo")
-          .title(v-html="matchSearch(preview.title)")
+          .title(contenteditable, v-html="matchSearch(preview.title)", @blur="update('title', $event)")
         .card-description
-          p(v-html="matchSearch(preview.description)")
+          p(contenteditable, v-html="matchSearch(preview.description)", @blur="update('description', $event)")
           .tags
             span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)")
       .card-footer(v-if="footer")
@@ -42,6 +44,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import { cloneDeep } from 'lodash'
 export default {
   props: {
     id: {
@@ -73,11 +76,20 @@ export default {
     }
   },
   methods: {
+    update (type, evt) {
+      let editObj = cloneDeep(this.source)
+      editObj.sync = 0
+      editObj.data[type] = evt.target.innerText
+      this.$store.dispatch('app/updateRecordCache', editObj)
+    },
     replacer(match, p1, p2, p3, offset, string) {
       console.log(match, p1, p2, p3, offset, string)
       return '<span class=highlight>' + match + '</span>'
     },
     matchSearch (content) {
+      if (!content) {
+        return content
+      }
       if (this.getSearchText.split('').length >= 2) {
         let searchText = this.getSearchText
         let re = new RegExp(searchText, 'gi')

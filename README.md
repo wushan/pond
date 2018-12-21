@@ -6,8 +6,9 @@ Website[http://pondsapp.now.sh/]
 
 ## Todo
 * Import Bookmarks
+  * https://chrome.google.com/webstore/detail/export-historybookmarks-t/dcoegfodcnjofhjfbhegcgjgapeichlf/related
 * Wrap via Electron
-* Auth0
+* Auth0 (V)
 * 英文分詞關鍵字
 * 分詞來源的 Fallback
 * Server 同步
