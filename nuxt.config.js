@@ -46,8 +46,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: ['~/plugins/lazyload.js'],
 
   /*
   ** Nuxt.js modules

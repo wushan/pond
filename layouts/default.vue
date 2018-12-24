@@ -8,6 +8,7 @@
           .previewNotificationInner
             previewCard(:source="previewContent", :footer="false")
       loginPanel(v-if="!$auth.loggedIn && !getNeverLogin")
+      heroComponent(v-if="getRecordCache.length < 5")
       nuxt
     .appFooter
       .meta Designed With Love.
@@ -15,21 +16,32 @@
 <script>
 import appHeader from '~/components/appHeader'
 import previewCard from '~/components/previewCard'
+import heroComponent from '~/components/heroComponent'
 import loginPanel from '~/components/loginPanel'
 import { mapGetters } from 'vuex'
 export default {
   components: {
     appHeader,
     previewCard,
-    loginPanel
+    loginPanel,
+    heroComponent
   },
   computed: {
     ...mapGetters({
-      previewContent: 'app/getPreviewContent',
-      isLoading: 'app/isLoading',
-      getNeverLogin: 'app/getNeverLogin'
+      previewContent: 'db/getPreviewContent',
+      isLoading: 'db/isLoading',
+      getNeverLogin: 'app/getNeverLogin',
+      getRecordCache: 'db/getRecordCache'
     })
-  }
+  },
+  mounted () {
+    this.$store.dispatch('db/feedStore').then((res) => {
+      if (this.$auth.loggedIn) {
+        this.$store.dispatch('db/syncRecords').then(() => {})
+      }
+    })
+  },
+  methods: {}
 }
 </script>
 

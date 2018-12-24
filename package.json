@@ -43,7 +43,8 @@
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
-    "short-uuid": "^3.0.1"
+    "short-uuid": "^3.0.1",
+    "vue-lazyload": "^1.2.6"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

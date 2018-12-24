@@ -3,88 +3,36 @@
     .container
       .waterfall
         transition-group(name="transform", tag="div", mode="out-in")
-          .pin(v-for="record of getRecordCache", :key="record.sid")
+          lazy-component.pin(v-for="record of getRecordCache", :key="record.sid", @show="handler(record.sid)")
             previewCard(:source="record", :id="record.sid")
 </template>
 
 <script>
-import Database from '~/assets/utils/db'
 import previewCard from '~/components/previewCard'
 import { mapGetters } from 'vuex'
-let db = {}
 export default {
   components: {
     previewCard
   },
   data () {
     return {
-      inputUrl: '',
-      fetchedData: null
+      inputUrl: ''
     }
   },
   computed: {
     ...mapGetters({
-      getRecordCache: 'app/getRecordCache',
+      getRecordCache: 'db/getRecordCache',
       getConfig: 'app/getConfig'
     })
   },
-  watch: {
-    getRecordCache () {
-      console.log('cacheChanged')
-    }
-  },
-  mounted () {
-    db = new Database('pounds', 'fish', 4)
-    this.fecthHistory().then(() => {
-      if (this.$auth.loggedIn) {
-        this.syncRecords()
-      }
-    })
-  },
+  watch: {},
+  mounted () {},
   methods: {
-    syncRecords () {
-      // 取出所有未同步的紀錄
-      db.getByQuery({
-        index: 'sync',
-        sync: 0
-      }).then((records) => {
-        if (records.length > 0) {
-          this.$axios.post('/api/records/sync', records).then((res) => {
-            // 同步成功後把這幾筆改成 synced
-            let updatedRecords = records.map((a, b) => {
-              a.sync = 1
-              return a
-            })
-            db.update(updatedRecords).then((res) => {
-              this.fecthHistory().then(() => {
-                setTimeout(() => {
-                  this.syncRecords()
-                }, this.getConfig.syncTime);
-              })
-            })
-          }).catch((err) => {
-            console.log(err)
-            this.fecthHistory().then(() => {
-              setTimeout(() => {
-                this.syncRecords()
-              }, this.getConfig.syncTime);
-            })
-          })
-        } else {
-          setTimeout(() => {
-            this.syncRecords()
-          }, this.getConfig.syncTime);
-        }
-      })
+    handler (sid) {
+      console.log(sid)
     },
     accessBookMarks () {
       console.log(bookmarks)
-    },
-    async fecthHistory () {
-      this.$store.commit('app/resetRecordCache')
-      await db.getAll().then((res) => {
-        this.$store.commit('app/setRecordCache', res)
-      })
     }
   }
 }

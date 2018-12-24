@@ -24,9 +24,9 @@
             span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)")
       .card-footer(v-if="footer")
         .button-group
-          a.button.secondary DELETE
+          a.button.secondary(@click="deleteRecord") DELETE
           a.button.edit REFETCH
-          a.button.primary COPY
+          a.button.primary(@click="copyResult(preview.url)") COPY
     .card.invalid(v-else)
       .card-image
         figure.image
@@ -69,18 +69,45 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getSearchText: 'app/getSearchText'
+      getSearchText: 'db/getSearchText'
     }),
     preview () {
       return this.source.data || this.source
     }
   },
   methods: {
+    copyResult (url) {
+      if (window.navigator.clipboard) {
+        window.navigator.clipboard.writeText(url)
+        .then(() => {
+          console.log('Text copied.')
+        })
+        .catch(() => {
+          console.log('Failed to copy text.')
+        })
+      } else {
+        throw new Error('Clipboard API is only available in https protocal.')
+      }
+    },
     update (type, evt) {
       let editObj = cloneDeep(this.source)
       editObj.sync = 0
       editObj.data[type] = evt.target.innerText
-      this.$store.dispatch('app/updateRecordCache', editObj)
+      this.$store.dispatch('db/updateRecordCache', editObj).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    deleteRecord () {
+      let deletedObj = cloneDeep(this.source)
+      deletedObj.sync = 0
+      deletedObj.deleted = 1
+      this.$store.dispatch('db/updateRecordCache', deletedObj).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     replacer(match, p1, p2, p3, offset, string) {
       console.log(match, p1, p2, p3, offset, string)

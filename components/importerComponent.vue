@@ -39,8 +39,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoading: 'app/isLoading',
-      previewContent: 'app/getPreviewContent'
+      isLoading: 'db/isLoading',
+      previewContent: 'db/getPreviewContent'
     })
   },
   mounted () {
@@ -54,32 +54,22 @@ export default {
       this.fetch()
     }, 300),
     fetch () {
-      let pattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
-      if (pattern.test(this.inputUrl)) {
-        this.$store.commit('app/setIsLoading', true)
-        this.$axios.post('/api/records/resolve', {url: this.inputUrl}).then((res) => {
-          this.$store.commit('app/setIsLoading', false)
-          this.$store.commit('app/setPreviewContent', res.data)
-          this.isValid = true
-        }).catch((err) => {
-          this.$store.commit('app/setIsLoading', false)
-          this.$store.commit('app/setPreviewContent', null)
-          this.isValid = false
-          console.log(err.message)
-        })
-      } else {
-        console.log('invalid')
-        this.$store.commit('app/setIsLoading', false)
-        this.$store.commit('app/setPreviewContent', null)
-      }
+      this.$store.dispatch('db/resolve', this.inputUrl).then((res) => {
+        this.isValid = true
+      }).catch((err) => {
+        this.isValid = false
+      })
     },
     add () {
       if (!this.previewContent) {
         return
       } else {
-        db.insert(this.$auth.user.email, ['default'], this.previewContent).then((result) => {
-          this.$store.commit('app/setRecordCache', [result])
-          this.$store.commit('app/setPreviewContent', null)
+        let record = {
+          username: this.$auth.user.email,
+          category: ['default'],
+          data: this.previewContent
+        }
+        this.$store.dispatch('db/insert', record).then((result) => {
           this.inputUrl = ''
         })
       }

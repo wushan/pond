@@ -46,6 +46,7 @@ export default class Database {
     objectStore.createIndex('sync', 'sync', { unique: false })
     objectStore.createIndex('indexed', 'indexed', { unique: false })
     objectStore.createIndex('created', 'created', { unique: false })
+    objectStore.createIndex('deleted', 'deleted', { unique: false })
     objectStore.createIndex('public', 'public', { unique: false })
   }
   insert(username, category, data) {
@@ -59,6 +60,7 @@ export default class Database {
           category: category,
           username: username,
           data: data,
+          deleted: 0,
           sync: 0,
           indexed: 0,
           created: moment().format('x'),
@@ -113,8 +115,8 @@ export default class Database {
       this.init().then(() => {
         var transaction = this.db.transaction(this.objectStoreName, 'readwrite')
         var objectStore = transaction.objectStore(this.objectStoreName)
-        // objectStore = objectStore.index('time')
-        var request = objectStore.getAll()
+        objectStore = objectStore.index('deleted')
+        var request = objectStore.getAll(IDBKeyRange.upperBound(1, true))
         request.onsuccess = function (evt) {
           let result = evt.target.result.sort((a, b) => {
             return a.created - b.created

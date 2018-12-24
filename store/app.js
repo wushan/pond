@@ -1,7 +1,10 @@
 import Database from '~/assets/utils/db'
 import { resolve } from 'path';
 import { rejects } from 'assert';
-let db = new Database('pounds', 'fish', 4)
+let db = {}
+if (process.browser) {
+  db = new Database('pounds', 'fish', 4)
+}
 export const state = () => ({
   config: {
     syncTime: 5000
@@ -45,6 +48,11 @@ export const mutations = {
 }
 
 export const actions = {
+  insert ({commit}, data) {
+    db.insert(this.$auth.user.email, ['default'], data).then((result) => {
+      commit('setRecordCache', [result])
+    })
+  },
   updateRecordCache({commit}, data) {
     return new Promise((resolve, reject) => {
       commit('putRecordCache', data)
