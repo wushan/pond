@@ -44,6 +44,7 @@ export default {
   justify-content: center;
   align-items: center;
   .loginPanelInner {
+    margin: 0 1.5em;
     background-color: $white;
     border-radius: $border-radius;
     .title {

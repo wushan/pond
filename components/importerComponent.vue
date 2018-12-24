@@ -43,9 +43,7 @@ export default {
       previewContent: 'db/getPreviewContent'
     })
   },
-  mounted () {
-    db = new Database('pounds', 'fish', 4)
-  },
+  mounted () {},
   methods: {
     trigger () {
       this.expand = !this.expand
@@ -76,7 +74,7 @@ export default {
     },
     discard () {
       this.inputUrl = ''
-      this.$store.commit('app/setPreviewContent', null)
+      this.$store.commit('db/setPreviewContent', null)
     }
   }
 }

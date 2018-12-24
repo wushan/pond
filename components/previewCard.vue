@@ -25,7 +25,7 @@
       .card-footer(v-if="footer")
         .button-group
           a.button.secondary(@click="deleteRecord") DELETE
-          a.button.edit REFETCH
+          //- a.button.edit REFETCH
           a.button.primary(@click="copyResult(preview.url)") COPY
     .card.invalid(v-else)
       .card-image

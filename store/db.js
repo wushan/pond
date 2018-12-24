@@ -1,6 +1,4 @@
 import Database from '~/assets/utils/db'
-import { resolve } from 'path';
-import { rejects } from 'assert';
 let db = {}
 if (process.browser) {
   db = new Database('pounds', 'fish', 4)
@@ -137,7 +135,7 @@ export const getters = {
     if (state.searchText !== '') {
       return state.recordCache.slice().filter(record => (record.data || {}).keywords.join().toLowerCase().includes(state.searchText) || ((record.data || {}).title || '').toLowerCase().includes(state.searchText))
     } else {
-      return state.recordCache
+      return state.recordCache.slice().filter(record => record.deleted === 0)
     }
   }
 }
