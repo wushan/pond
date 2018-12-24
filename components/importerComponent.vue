@@ -27,6 +27,8 @@
 import Database from '~/assets/utils/db'
 import { mapGetters } from 'vuex'
 import { debounce } from 'lodash'
+import moment from 'moment'
+import short from 'short-uuid'
 let db = {}
 export default {
   data () {
@@ -63,9 +65,15 @@ export default {
         return
       } else {
         let record = {
-          username: this.$auth.user.email,
+          sid: short.uuid(),
           category: ['default'],
-          data: this.previewContent
+          username: this.$auth.user.email,
+          data: this.previewContent,
+          deleted: 0,
+          sync: 0,
+          indexed: 0,
+          created: moment().format('x'),
+          public: 1
         }
         this.$store.dispatch('db/insert', record).then((result) => {
           this.inputUrl = ''

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+import short from 'short-uuid'
 export default {
   data () {
     return {
@@ -46,9 +48,15 @@ export default {
           const result = await this.$axios.post('/api/records/resolve', {url: request.url})
           this.parsed++
           let record = {
-            username: this.$auth.user.email,
+            sid: short.uuid(),
             category: ['default'],
-            data: result.data
+            username: this.$auth.user.email,
+            data: result.data,
+            deleted: 0,
+            sync: 0,
+            indexed: 0,
+            created: moment().format('x'),
+            public: 1
           }
           this.$store.dispatch('db/insert', record)
         } catch(err) {

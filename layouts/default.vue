@@ -38,6 +38,7 @@ export default {
     this.$store.dispatch('db/feedStore').then((res) => {
       if (this.$auth.loggedIn) {
         this.$store.dispatch('db/syncRecords').then(() => {})
+        this.$store.dispatch('db/checkSynchronize')
       }
     })
   },

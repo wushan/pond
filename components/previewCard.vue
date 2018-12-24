@@ -21,7 +21,7 @@
         .card-description
           p(contenteditable, v-html="matchSearch(preview.description)", @blur="update('description', $event)")
           .tags
-            span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)")
+            span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)", contenteditable, @blur="updateTag('keywords', tag, $event)")
       .card-footer(v-if="footer")
         .button-group
           a.button.secondary(@click="deleteRecord") DELETE
@@ -98,6 +98,12 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
+    },
+    updateTag (type, origin, evt) {
+      console.log('------')
+      console.log(type)
+      console.log(origin)
+      console.log(evt.target.innerText)
     },
     deleteRecord () {
       let deletedObj = cloneDeep(this.source)

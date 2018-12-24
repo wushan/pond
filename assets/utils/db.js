@@ -49,26 +49,26 @@ export default class Database {
     objectStore.createIndex('deleted', 'deleted', { unique: false })
     objectStore.createIndex('public', 'public', { unique: false })
   }
-  insert(username, category, data) {
+  insert(data) {
     return new Promise((resolve, reject) => {
       this.init().then(() => {
         // 利用 this.db 取得 db 連線
         var transaction = this.db.transaction(this.objectStoreName, 'readwrite')
         var objectStore = transaction.objectStore(this.objectStoreName)
-        let record = {
-          sid: short.uuid(),
-          category: category,
-          username: username,
-          data: data,
-          deleted: 0,
-          sync: 0,
-          indexed: 0,
-          created: moment().format('x'),
-          public: 1
-        }
-        var request = objectStore.add(record)
+        // let record = {
+        //   sid: short.uuid(),
+        //   category: category,
+        //   username: username,
+        //   data: data,
+        //   deleted: 0,
+        //   sync: 0,
+        //   indexed: 0,
+        //   created: moment().format('x'),
+        //   public: 1
+        // }
+        var request = objectStore.put(data)
         request.onsuccess = function (evt) {
-          resolve(record)
+          resolve(data)
         }
         request.onerror = function (evt) {
           reject(evt)
@@ -82,12 +82,32 @@ export default class Database {
     return new Promise((resolve, reject) => {
       let requests = []
       records.forEach((val, index) => {
-        requests.push(this.put(val))
+        if (val.deleted === 1) {
+          requests.push(this.removeRecord(val))
+        } else {
+          requests.push(this.put(val))
+        }
       })
       Promise.all(requests).then((res) => {
         resolve(requests.length)
       }).catch((err) => {
         reject(err)
+      })
+    })
+  }
+  removeRecord(record) {
+    return new Promise((resolve, reject) => {
+      this.init().then(() => {
+        // 利用 this.db 取得 db 連線
+        var transaction = this.db.transaction(this.objectStoreName, 'readwrite')
+        var objectStore = transaction.objectStore(this.objectStoreName)
+        var request = objectStore.delete(record.sid)
+        request.onsuccess = function (evt) {
+          resolve()
+        }
+        request.onerror = function (evt) {
+          reject(evt)
+        }
       })
     })
   }
