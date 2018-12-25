@@ -1,6 +1,11 @@
 <template lang="pug">
   #home
     .container
+      //- .testWrapper
+      //-   grid
+      //-     previewCard(v-for="record of getRecordCache", :key="record.sid", @show="handler(record.sid)", :source="record", :id="record.sid")
+          //- lazy-component.pin(v-for="record of getRecordCache", :key="record.sid", @show="handler(record.sid)")
+          //-   previewCard(:source="record", :id="record.sid")
       .waterfall
         transition-group(name="transform", tag="div", mode="out-in")
           lazy-component.pin(v-for="record of getRecordCache", :key="record.sid", @show="handler(record.sid)")
@@ -9,6 +14,7 @@
 
 <script>
 import previewCard from '~/components/previewCard'
+// import grid from '~/components/grid'
 import { mapGetters } from 'vuex'
 export default {
   components: {

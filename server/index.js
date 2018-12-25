@@ -6,7 +6,6 @@ const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || 3000
-const Resolver = require('./resolver')
 var bodyParser = require('body-parser')
 
 app.set('port', port)
@@ -24,19 +23,6 @@ async function start() {
     const builder = new Builder(nuxt)
     await builder.build()
   }
-  app.post('/api/fetchContent', (req, res) => {
-    let url = req.body.url
-    if (!url) {
-      return
-    }
-    let resolver = new Resolver(url)
-    resolver.resolve().then((result) => {
-      return res.json(result)
-    }).catch((err) => {
-      console.log(err)
-      return res.sendStatus(500)
-    })
-  })
   // Give nuxt middleware to express
   app.use(nuxt.render)
 

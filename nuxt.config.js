@@ -7,7 +7,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'PondsApp - super fast bookmark services for personal and small teams.',
+    title: 'Ponds Cloud - Blazing-fast bookmark service for personal and small teams.',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -61,7 +61,7 @@ module.exports = {
   ** Axios module configuration
   */
   env: {
-    ENV_LOCATION: process.env.API_URL
+    API_URL: process.env.API_URL
   },
   axios: {
     // See https://github.com/nuxt-community/axios-module#options

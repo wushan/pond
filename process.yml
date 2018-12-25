@@ -1,0 +1,5 @@
+apps:
+  - script   : './server/index.js'
+    name     : 'ponds'
+    exec_mode: 'fork'
+    instances: 1
