@@ -12,3 +12,5 @@ Website[http://pondsapp.now.sh/]
 * 英文分詞關鍵字
 * 分詞來源的 Fallback
 * Server 同步
+* TEAM HOME PAGE
+* 首頁
