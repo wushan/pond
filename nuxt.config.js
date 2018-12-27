@@ -22,7 +22,6 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
-
   /*
   ** Global CSS
   */
@@ -46,7 +45,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/lazyload.js'],
+  plugins: ['~/plugins/axios.js', '~/plugins/lazyload.js'],
 
   /*
   ** Nuxt.js modules
@@ -54,7 +53,6 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     '@nuxtjs/font-awesome'
   ],
   /*
@@ -69,9 +67,7 @@ module.exports = {
     browserBaseURL: process.env.API_URL,
     https: true
   },
-  router: {
-    middleware: ['auth']
-  },
+  router: {},
   /*
   ** Build configuration
   */

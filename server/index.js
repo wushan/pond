@@ -2,6 +2,7 @@
 const axios = require('axios')
 const express = require('express')
 const consola = require('consola')
+var cookieParser = require('cookie-parser')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const host = process.env.HOST || '0.0.0.0'
@@ -11,6 +12,8 @@ var bodyParser = require('body-parser')
 app.set('port', port)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(cookieParser())
+
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')

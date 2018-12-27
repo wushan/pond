@@ -1,10 +1,12 @@
 <template lang="pug">
-  #home
-    .container
-      .waterfall
-        transition-group(name="transform", tag="div", mode="out-in")
-          lazy-component.pin(v-for="record of getGlobalRecordCache", :key="record.sid", @show="handler(record.sid)")
-            previewCard(:source="record", :id="record.sid")
+  .team-wrapper.container
+    h1
+      | {{getTeam}}
+      small team
+    .waterfall
+      transition-group(name="transform", tag="div", mode="out-in")
+        lazy-component.pin(v-for="record of getRecordCache", :key="record.sid", @show="handler(record.sid)")
+          previewCard(:source="record", :id="record.sid")
 </template>
 
 <script>
@@ -22,14 +24,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getGlobalRecordCache: 'app/getGlobalRecordCache',
-      getConfig: 'app/getConfig'
+      getRecordCache: 'db/getRecordCache',
+      getConfig: 'app/getConfig',
+      getTeam: 'user/getTeam'
     })
   },
   watch: {},
-  mounted () {
-    this.$store.dispatch('app/fetchGlobalRecordCache')
-  },
+  mounted () {},
   methods: {
     handler (sid) {
       console.log(sid)

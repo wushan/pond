@@ -8,9 +8,9 @@
           .title PONDS
       .col.searchBox
         searchComponent
-      .col.userBox(v-if="$auth.loggedIn")
+      .col.userBox(v-if="isLoggedIn")
         .userAvatar(@click="toggleMenu", :class="{ inactive: menu }")
-          img(:src="$auth.user.picture")
+          img(:src="profile.photos[0].value")
         .userSubMenu(:class="{ active: menu }")
           ul
             li
@@ -22,6 +22,7 @@
 <script>
 import importerComponent from '~/components/importerComponent'
 import searchComponent from '~/components/searchComponent'
+import { mapGetters } from 'vuex';
 export default {
   components: {
     importerComponent,
@@ -32,9 +33,15 @@ export default {
       menu: false
     }
   },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'user/isLoggedIn',
+      profile: 'user/profile'
+    })
+  },
   methods: {
     async logout() {
-      await this.$auth.logout()
+      await this.$store.dispatch('user/logout')
       let pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/
       let patterns = pattern.exec(window.location.href)
       window.location.href = 'https://ponds.auth0.com/v2/logout?returnTo=' + patterns[1] + patterns[2]

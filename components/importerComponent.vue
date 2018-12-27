@@ -42,7 +42,11 @@ export default {
   computed: {
     ...mapGetters({
       isLoading: 'db/isLoading',
-      previewContent: 'db/getPreviewContent'
+      previewContent: 'db/getPreviewContent',
+      isLoggedIn: 'user/isLoggedIn',
+      profile: 'user/profile',
+      getUserId: 'user/getUserId',
+      getTeam: 'user/getTeam'
     })
   },
   mounted () {},
@@ -67,13 +71,15 @@ export default {
         let record = {
           sid: short.uuid(),
           category: ['default'],
-          username: this.$auth.user.email,
+          username: this.profile.emails[0].value,
           data: this.previewContent,
           deleted: 0,
           sync: 0,
           indexed: 0,
           created: moment().format('x'),
-          public: 1
+          public: 1,
+          userid: this.getUserId,
+          teamid: this.getTeam
         }
         this.$store.dispatch('db/insert', record).then((result) => {
           this.inputUrl = ''

@@ -52,8 +52,8 @@ export const actions = {
       commit('setRecordCache', res)
     })
   },
-  async checkSynchronize ({dispatch, commit, getters}) {
-    const { data } = await this.$axios.get('/api/records/count?where=%7B%22username%22%3A%20%22' + this.$auth.user.email + '%22%7D')
+  async checkSynchronize ({dispatch, commit, getters, rootGetters}) {
+    const { data } = await this.$axios.get('/api/records/count?where={\"where\": {\"teamid\": \"' + rootGetters['user/getTeam'] + '\"}}')
     if (getters.recordCount < data.count) {
       await dispatch('downloadRecords')
     } else {
@@ -112,8 +112,8 @@ export const actions = {
       console.log(err)
     })
   },
-  async downloadRecords ({dispatch}) {
-    const { data } = await this.$axios.get('/api/records?where=%7B%22username%22%3A%20%22' + this.$auth.user.email + '%22%7D')
+  async downloadRecords({ dispatch, rootGetters}) {
+    const { data } = await this.$axios.get('/api/records?where=%7B%22username%22%3A%20%22' + rootGetters['user/email'] + '%22%7D')
     let records = data.map((item, b) => {
       return {
         sid: item.sid,
@@ -124,7 +124,9 @@ export const actions = {
         sync: 1,
         indexed: 0,
         created: item.created,
-        public: item.public ? 1 : 0
+        public: item.public ? 1 : 0,
+        userid: item.userid,
+        teamid: item.teamid
       }
     })
     await dispatch('bulkInsert', records).then((res) => {

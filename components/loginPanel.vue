@@ -9,7 +9,7 @@
         .meta * data will be sync to our server automatically, defaults to visible in public, check privacy settings if this isn't what you want after login.
       .button-group
         a.button.warning(@click="neverLogin") No Thanks
-        a.button.primary(@click="login") Sign in with Auth0
+        a.button.primary(@click="login") Sign in with Google
     //- .loginPanelInner
     //-   .title Sign In
     //-   p we can keep your fishes(bookmarks) updated cross platform.
@@ -21,7 +21,7 @@
 export default {
   methods: {
     login () {
-      this.$auth.loginWith('auth0')
+      window.location.href=process.env.API_URL + 'auth/google'
     },
     neverLogin () {
       this.$store.commit('app/setNeverLogin', true)

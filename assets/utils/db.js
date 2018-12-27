@@ -48,6 +48,8 @@ export default class Database {
     objectStore.createIndex('created', 'created', { unique: false })
     objectStore.createIndex('deleted', 'deleted', { unique: false })
     objectStore.createIndex('public', 'public', { unique: false })
+    objectStore.createIndex('userid', 'userid', { unique: false })
+    objectStore.createIndex('teamid', 'teamid', { unique: false })
   }
   insert(data) {
     return new Promise((resolve, reject) => {
@@ -55,17 +57,6 @@ export default class Database {
         // 利用 this.db 取得 db 連線
         var transaction = this.db.transaction(this.objectStoreName, 'readwrite')
         var objectStore = transaction.objectStore(this.objectStoreName)
-        // let record = {
-        //   sid: short.uuid(),
-        //   category: category,
-        //   username: username,
-        //   data: data,
-        //   deleted: 0,
-        //   sync: 0,
-        //   indexed: 0,
-        //   created: moment().format('x'),
-        //   public: 1
-        // }
         var request = objectStore.put(data)
         request.onsuccess = function (evt) {
           resolve(data)

@@ -19,6 +19,7 @@
 <script>
 import moment from 'moment'
 import short from 'short-uuid'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -26,6 +27,14 @@ export default {
       parsedRecords: [],
       parsed: 0
     }
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'user/isLoggedIn',
+      profile: 'user/profile',
+      getUserId: 'user/getUserId',
+      getTeam: 'user/getTeam'
+    })
   },
   methods: {
     parseFile () {
@@ -50,13 +59,15 @@ export default {
           let record = {
             sid: short.uuid(),
             category: ['default'],
-            username: this.$auth.user.email,
+            username: this.profile.emails[0].value,
             data: result.data,
             deleted: 0,
             sync: 0,
             indexed: 0,
             created: moment().format('x'),
-            public: 1
+            public: 1,
+            userid: this.getUserId,
+            teamid: this.getTeam
           }
           this.$store.dispatch('db/insert', record)
         } catch(err) {
