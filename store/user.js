@@ -18,8 +18,8 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetchTeamInfo ({commit}, data) {
-    let teamInfo = await this.$axios.get('/api/Teams/test')
+  async fetchTeamInfo({ commit, getters}, data) {
+    let teamInfo = await this.$axios.get('/api/Teams/' + getters.getTeamSlug)
     commit('setTeamInfo', teamInfo.data)
     return teamInfo
   },

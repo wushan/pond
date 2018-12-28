@@ -1,7 +1,7 @@
 import Database from '~/assets/utils/db'
 let db = {}
 if (process.browser) {
-  db = new Database('pounds', 'fish', 4)
+  db = new Database('pounds', 'fish', 5)
 }
 export const state = () => ({
   config: {
