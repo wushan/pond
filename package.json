@@ -1,7 +1,7 @@
 {
   "name": "ponds",
   "version": "1.0.9",
-  "description": "Ponds Cloud for your fishes.",
+  "description": "Blazing-fast bookmark service for personal and small teams.",
   "author": "tony",
   "private": true,
   "scripts": {

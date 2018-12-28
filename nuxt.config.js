@@ -11,7 +11,15 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
+      { property: 'og:title', content: 'Ponds Cloud - Blazing-fast bookmark service for personal and small teams.' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:site_name', content: 'Ponds Cloud' },
+      { property: 'og:url', content: 'https://ponds.cloud/' },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { property: 'og:image', content: '/images/facebook-share-image.jpg' },
+      { property: 'og:description', content: 'Blazing-fast bookmark service for personal and small teams.' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
