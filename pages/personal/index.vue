@@ -28,12 +28,8 @@ export default {
   },
   watch: {},
   mounted () {
-    this.fetchTeamInfo()
   },
   methods: {
-    fetchTeamInfo () {
-      this.$store.dispatch('user/fetchTeamInfo')
-    },
     handler (sid) {
       // console.log(sid)
     },
