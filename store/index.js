@@ -8,7 +8,7 @@ export const actions = {
       await dispatch('user/verifyUser', req.cookies.userId).then((data) => {
         commit('user/setUser', data)
         commit('user/setLoginStatus', true)
-        if (store.getters['user/getTeamSlug'] !== '') {
+        if (store.getters['user/getTeamSlug']) {
           redirect('/' + store.getters['user/getTeamSlug'])
         } else {
           redirect('/personal')
