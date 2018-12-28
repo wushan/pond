@@ -16,7 +16,7 @@ app.use(cookieParser())
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')
-config.dev = (process.env.NODE_ENV === 'development')
+config.dev = !(process.env.NODE_ENV === 'production')
 async function start() {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)

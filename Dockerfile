@@ -17,4 +17,4 @@ RUN apk --no-cache --virtual build-dependencies add \
     && npm install \
     && apk del build-dependencies \
     && npm run build
-CMD ["pm2-runtime", "--json", "process.yml"]
+CMD ["pm2-runtime", "--json", "--env", "production", "process.yml"]
