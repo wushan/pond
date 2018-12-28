@@ -3,7 +3,6 @@
   appHeader
   #appContent
     .appContentInner
-      p {{test}}
       transition(name="fade", mode="out-in")
         #previewNotification(v-if="previewContent")
           .previewNotificationInner

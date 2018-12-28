@@ -114,13 +114,13 @@ export const actions = {
   },
   async downloadRecords({ dispatch, rootGetters}) {
     // 如果有 team 同步整個 team or 個人
-    const data = {}
+    let data = {}
     if (rootGetters['user/getTeamSlug'] !== '') {
       data = await this.$axios.get('/api/records?where=%7B%22teamId%22%3A%20%22' + rootGetters['user/getTeamSlug'] + '%22%7D')
     } else {
       data = await this.$axios.get('/api/records?where=%7B%22username%22%3A%20%22' + rootGetters['user/email'] + '%22%7D')
     }
-    let records = data.map((item, b) => {
+    let records = data.data.map((item, b) => {
       return {
         sid: item.sid,
         category: item.category,

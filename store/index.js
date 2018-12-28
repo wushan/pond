@@ -19,6 +19,8 @@ export const actions = {
         redirect('/')
       })
     } else {
+      commit('user/setUser', null)
+      commit('user/setLoginStatus', false)
       redirect('/')
     }
   }
