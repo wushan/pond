@@ -57,3 +57,43 @@ h6 {
   color: $darkblue;
   background-color: yellow;
 }
+
+.text-button {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-decoration: none;
+  margin: 0 0.25em;
+  color: $darkgray;
+  font-weight: 600;
+  width: 46px;
+  height: 36px;
+  transition: .3s all ease;
+  border-radius: 3px;
+  & + .text-button {
+    @include breakpoint(1024px) {
+      margin-left: 1em;
+    }
+  }
+  &:hover {
+    box-shadow: inset 0 0 2px rgba($black, .33);
+  }
+  &.nuxt-link-exact-active {
+    color: $black;
+  }
+  i {
+    font-size: 1.6em;
+  }
+  span {
+    display: none;
+  }
+  @include breakpoint(1024px) {
+    i {
+      display: none;
+    }
+    span {
+      display: block;
+    }
+  }
+}

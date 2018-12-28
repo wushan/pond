@@ -9,7 +9,7 @@
           .previewNotificationInner
             previewCard(:source="previewContent", :footer="false")
       loginPanel(v-if="!isLoggedIn && !getNeverLogin")
-      heroComponent
+      heroComponent(v-if="getBulkImport")
       nuxt
     .appFooter
       .meta Designed With Love.
@@ -39,7 +39,8 @@ export default {
       isLoading: 'db/isLoading',
       getNeverLogin: 'app/getNeverLogin',
       getRecordCache: 'db/getRecordCache',
-      isLoggedIn: 'user/isLoggedIn'
+      isLoggedIn: 'user/isLoggedIn',
+      getBulkImport: 'app/getBulkImport'
     })
   },
   mounted () {
@@ -57,7 +58,7 @@ export default {
 <style lang="scss">
 @import '~assets/styles/lib/var';
 html, body, #__nuxt, #__layout, #wrapper {
-  background-color: #f7f7f7;
+  background-color: $white;
   height: 100%;
 }
 #appContent {
@@ -73,7 +74,7 @@ html, body, #__nuxt, #__layout, #wrapper {
 }
 #previewNotification {
   position: absolute;
-  top: 60px;
+  top: 116px;
   bottom: 0;
   right: 0;
   left: 0;

@@ -23,6 +23,19 @@
       background-color: rgba($darkgray, .63);
     }
   }
+  .card-compact {
+    border-radius: $border-radius;
+    overflow: hidden;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    a {
+      display: block;
+      width: 100%;
+    }
+  }
   .card-image {
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
@@ -77,6 +90,7 @@
     color: $black;
     font-weight: 700;
     line-height: 1.4;
+    word-break: break-all;
     figure {
       max-width: 36px;
       margin-right: 1em;
@@ -103,18 +117,34 @@
 }
 .card-footer {
   position: absolute;
-  top: calc(100% - 0.5em);
+  top: 6em;
+  width: 90%;
   left: 0;
   right: 0;
+  margin: auto;
   border-top: 0;
   z-index: 1;
   box-shadow: 0 0px 3px rgba(0,0,0,0.33);
-  border-bottom-left-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
+  border-radius: $border-radius;
   overflow: hidden;
+  .button-group {}
   .button {
     transition: .3s all ease;
     font-size: 0;
     height: 0;
+  }
+}
+.waterfall {
+  column-count: 6;
+  column-width: 18em;
+  column-gap: 1em;
+  transition: .3s all ease;
+  .pin {
+    transition: .3s all ease;
+    padding: 0.2em 0;
+    margin: 0 0.125em 1em;
+    -moz-page-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
   }
 }

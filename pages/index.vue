@@ -28,11 +28,12 @@ export default {
   },
   watch: {},
   mounted () {
+    this.$store.dispatch('app/fetchGlobalRecordCount')
     this.$store.dispatch('app/fetchGlobalRecordCache')
   },
   methods: {
     handler (sid) {
-      console.log(sid)
+      // console.log(sid)
     },
     accessBookMarks () {
       console.log(bookmarks)
@@ -45,31 +46,11 @@ export default {
 .title {
   word-break: break-all;
 }
-h1 {
-  text-align: center;
-  small {
-    display: block;
-  }
-}
 .logo {
   img {
     max-width: 120px;
     display: block;
     margin: auto;
-  }
-}
-.waterfall {
-  column-count: 6;
-  column-width: 18em;
-  column-gap: 1em;
-  transition: .3s all ease;
-  .pin {
-    transition: .3s all ease;
-    padding: 0.2em 0;
-    margin: 0 0.125em 1em;
-    -moz-page-break-inside: avoid;
-    -webkit-column-break-inside: avoid;
-    break-inside: avoid;
   }
 }
 </style>

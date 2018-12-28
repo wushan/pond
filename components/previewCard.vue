@@ -1,7 +1,11 @@
 <template lang="pug">
   #previewCard
     .card(v-if="preview")
-      .card-image
+      .card-compact(v-if="compact")
+        a(:href="preview.url", target="_blank")
+          figure.image
+            img(:src="preview.image")
+      .card-image(v-else)
         a(:href="preview.url", target="_blank")
           figure.image
             img(:src="preview.image")
@@ -9,7 +13,7 @@
           i.fa.fa-check(v-if="source.sync === 1")
           i.fa.fa-refresh(v-else)
 
-      .card-content
+      .card-content(v-if="!compact")
         time.time
           span(v-if="preview.date") {{formatDate(preview.date)}} /
           |  Added: {{formatDateFromStamp(source.created)}}
@@ -60,6 +64,10 @@ export default {
     footer: {
       type: Boolean,
       default: true
+    },
+    compact: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

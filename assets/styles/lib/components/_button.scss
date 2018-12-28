@@ -93,8 +93,8 @@ button {
   text-decoration: none;
   display: inline-block;
   vertical-align: middle;
-  background-color: $primary;
-  color: $white;
+  // background-color: $primary;
+  // color: $white;
   height: $input-height;
   line-height: $input-height;
   border-radius: $border-radius;
@@ -105,10 +105,10 @@ button {
     border-radius: 0;
   }
   &:hover, &:active, &.active, &.nuxt-link-active {
-    background-color: darken($darkblue, 15%);
+    // background-color: darken($darkblue, 15%);
   }
   &.nuxt-link-exact-active {
-    background-color: darken($darkblue, 20%);
+    // background-color: darken($darkblue, 20%);
   }
   &.primary {
     background-color: $primary;

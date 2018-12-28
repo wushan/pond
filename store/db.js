@@ -53,7 +53,7 @@ export const actions = {
     })
   },
   async checkSynchronize ({dispatch, commit, getters, rootGetters}) {
-    const { data } = await this.$axios.get('/api/records/count?where={\"where\": {\"teamid\": \"' + rootGetters['user/getTeam'] + '\"}}')
+    const { data } = await this.$axios.get('/api/records/count?where={\"teamId\": \"' + rootGetters['user/getTeamSlug'] + '\"}')
     if (getters.recordCount < data.count) {
       await dispatch('downloadRecords')
     } else {
@@ -113,7 +113,13 @@ export const actions = {
     })
   },
   async downloadRecords({ dispatch, rootGetters}) {
-    const { data } = await this.$axios.get('/api/records?where=%7B%22username%22%3A%20%22' + rootGetters['user/email'] + '%22%7D')
+    // 如果有 team 同步整個 team or 個人
+    const data = {}
+    if (rootGetters['user/getTeamSlug'] !== '') {
+      data = await this.$axios.get('/api/records?where=%7B%22teamId%22%3A%20%22' + rootGetters['user/getTeamSlug'] + '%22%7D')
+    } else {
+      data = await this.$axios.get('/api/records?where=%7B%22username%22%3A%20%22' + rootGetters['user/email'] + '%22%7D')
+    }
     let records = data.map((item, b) => {
       return {
         sid: item.sid,
@@ -125,8 +131,8 @@ export const actions = {
         indexed: 0,
         created: item.created,
         public: item.public ? 1 : 0,
-        userid: item.userid,
-        teamid: item.teamid
+        userid: item.publisherId,
+        teamid: item.teamId
       }
     })
     await dispatch('bulkInsert', records).then((res) => {
@@ -146,9 +152,9 @@ export const actions = {
         console.log(err.message)
       })
     } else {
-      console.log('invalid')
       commit('setIsLoading', false)
       commit('setPreviewContent', null)
+      return Promise.reject()
     }
   },
   // async searchRecords ({commit}, text) {
@@ -172,11 +178,24 @@ export const getters = {
   getPreviewContent(state) {
     return state.previewContent
   },
-  getRecordCache(state) {
+  getRecordCache(state, getters, rootState, rootGetters) {
     if (state.searchText !== '') {
-      return state.recordCache.slice().filter(record => (record.data || {}).keywords.join().toLowerCase().includes(state.searchText) || ((record.data || {}).title || '').toLowerCase().includes(state.searchText))
+      // 有搜尋條件時
+      return state.recordCache.slice().filter(record => ((record.data || {}).keywords.join().toLowerCase().includes(state.searchText) || ((record.data || {}).title || '').toLowerCase().includes(state.searchText) && record.userid === rootGetters['user/getUserId']))
     } else {
-      return state.recordCache.slice().filter(record => record.deleted === 0)
+      // 無搜尋條件時
+      return state.recordCache.slice().filter(record => record.deleted === 0 && record.userid === rootGetters['user/getUserId'])
+    }
+  },
+  getRecordCacheByTeam(state, getters, rootState, rootGetters) {
+    if (state.searchText !== '') {
+      // 有搜尋條件時
+      console.log(rootGetters['user/getTeamSlug'] + 'QQ')
+      return state.recordCache.slice().filter(record => ((record.data || {}).keywords.join().toLowerCase().includes(state.searchText) || ((record.data || {}).title || '').toLowerCase().includes(state.searchText) && record.teamid === rootGetters['user/getTeamSlug']))
+    } else {
+      // 無搜尋條件時
+      console.log(rootGetters['user/getTeamSlug'])
+      return state.recordCache.slice().filter(record => record.deleted === 0 && record.teamid === rootGetters['user/getTeamSlug'])
     }
   },
   recordCount (state) {

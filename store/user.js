@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 export const state = () => ({
   user: null,
+  teamInfo: null,
   isLoggedIn: false
 })
 
@@ -10,12 +11,20 @@ export const mutations = {
   },
   setLoginStatus (state, data) {
     state.isLoggedIn = data
+  },
+  setTeamInfo (state, data) {
+    state.teamInfo = data
   }
 }
 
 export const actions = {
+  async fetchTeamInfo ({commit}, data) {
+    let teamInfo = await this.$axios.get('/api/Teams/test')
+    commit('setTeamInfo', teamInfo.data)
+    return teamInfo
+  },
   async verifyUser({ commit, getters }, id) {
-    const { data } = await this.$axios.get('/api/UserIdentities/' + id + '?filter={\"include\": \"user\"}')
+    let { data } = await this.$axios.get('/api/UserIdentities/' + id + '?filter={\"include\": \"user\"}')
     return data
     // try {
     //   const { data } = await this.$axios.get('/api/UserIdentities/' + id + '?filter={\"include\": \"user\"}')
@@ -45,9 +54,16 @@ export const getters = {
   getToken (state) {
     return Cookies.get('access_token')
   },
-  getTeam (state) {
+  getTeamSlug (state) {
     return ((state.user || {}).user || {}).teamId
     // return state.user.user.teamId.split('')[0].toUpperCase() + state.user.user.teamId.split('').slice(1).join('')
+  },
+  getTeam (state, getters) {
+    return {
+      name: (state.teamInfo || {}).name,
+      description: (state.teamInfo || {}).description,
+      slug: (state.teamInfo || {}).slug
+    }
   },
   getUserId (state) {
     return state.user.userId

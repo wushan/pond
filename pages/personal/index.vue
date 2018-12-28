@@ -1,13 +1,8 @@
 <template lang="pug">
   .team-wrapper.container
-    .team-header.restrict(v-if="getTeam.name")
-      .meta TEAM
-      h1
-        | {{getTeam.name}}
-        small {{getTeam.description}}
     .waterfall
       transition-group(name="transform", tag="div", mode="out-in")
-        lazy-component.pin(v-for="record of getRecordCacheByTeam", :key="record.sid", @show="handler(record.sid)")
+        lazy-component.pin(v-for="record of getRecordCache", :key="record.sid", @show="handler(record.sid)")
           previewCard(:source="record", :id="record.sid", :compact="isCompact")
 </template>
 
@@ -21,12 +16,12 @@ export default {
   data () {
     return {
       inputUrl: '',
-      isCompact: true
+      isCompact: false
     }
   },
   computed: {
     ...mapGetters({
-      getRecordCacheByTeam: 'db/getRecordCacheByTeam',
+      getRecordCache: 'db/getRecordCache',
       getConfig: 'app/getConfig',
       getTeam: 'user/getTeam'
     })

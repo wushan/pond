@@ -8,9 +8,21 @@
           .title PONDS
       .col.searchBox
         searchComponent
+      .col.menu
+        nuxt-link.text-button(to="/")
+          i.fa.fa-home
+          span Home
+        nuxt-link.text-button(to="/personal")
+          i.fa.fa-building-o
+          span You
+        nuxt-link.text-button(:to="'/' + getTeamSlug", v-if="getTeamSlug")
+          i.fa.fa-building-o
+          span Team
       .col.userBox(v-if="isLoggedIn")
-        .userAvatar(@click="toggleMenu", :class="{ inactive: menu }")
-          img(:src="profile.photos[0].value")
+        .userDropdown(@click="toggleMenu", :class="{ inactive: menu }")
+          .userAvatar
+            img(:src="profile.photos[0].value")
+          .userName {{profile.displayName}}
         .userSubMenu(:class="{ active: menu }")
           ul
             li
@@ -36,7 +48,8 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/isLoggedIn',
-      profile: 'user/profile'
+      profile: 'user/profile',
+      getTeamSlug: 'user/getTeamSlug'
     })
   },
   methods: {
@@ -75,6 +88,7 @@ export default {
   align-items: center;
   .appHeaderInner {
     flex: 1;
+    height: 63px;
     display: flex;
     align-items: center;
     padding: 0 0.5em;
@@ -82,7 +96,10 @@ export default {
       display: flex;
       position: relative;
       align-items: center;
-      padding: 0.8em;
+      padding: 0.8em 0.2em;
+      @include breakpoint(1024px) {
+        padding: 0.8em;
+      }
       &.brand-wrapper {
         // max-width: 46px;
       }
@@ -175,15 +192,28 @@ export default {
       }
     }
   }
+  .userDropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    cursor: pointer;
+    .userName {
+      display: none;
+      @include breakpoint(1024px) {
+        display: block;
+        margin-left: 0.5em;
+      }
+    }
+  }
   .userAvatar {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    border: 2px solid rgba($primary, .33);
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba($primary, .33);
     overflow: hidden;
     position: relative;
     transition: .3s all ease;
-    cursor: pointer;
     img {
       position: absolute;
       display: block;

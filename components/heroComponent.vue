@@ -33,7 +33,7 @@ export default {
       isLoggedIn: 'user/isLoggedIn',
       profile: 'user/profile',
       getUserId: 'user/getUserId',
-      getTeam: 'user/getTeam'
+      getTeamSlug: 'user/getTeamSlug'
     })
   },
   methods: {
@@ -67,7 +67,7 @@ export default {
             created: moment().format('x'),
             public: 1,
             userid: this.getUserId,
-            teamid: this.getTeam
+            teamid: this.getTeamSlug
           }
           this.$store.dispatch('db/insert', record)
         } catch(err) {
@@ -83,10 +83,20 @@ export default {
 @import '~assets/styles/lib/var';
 #heroComponent {
   margin-bottom: 1em;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 116px;
+  bottom: 0;
+  z-index: 801;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0,0,0, 0.85);
 }
 .heroComponentInner {
   background-color: $white;
   // border: 1px solid $gray;
+  box-shadow: 0 0 3px rgba($black, .33);
   border-radius: $border-radius;
   // padding: 0.5em 1.5em;
   .title {
