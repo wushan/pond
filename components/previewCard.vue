@@ -16,16 +16,17 @@
       .card-content(v-if="!compact")
         time.time
           span(v-if="preview.date") {{formatDate(preview.date)}} /
-          |  Added: {{formatDateFromStamp(source.created)}}
+          |  Added: {{formatDateFromStamp(source.created)}} / {{nickName}}
         //- a.card-title(:href="preview.url", target="_blank")
         a.card-title
           figure
             img(:src="preview.logo")
-          .title(contenteditable, v-html="matchSearch(preview.title)", @blur="update('title', $event)")
+          .title(:contenteditable="isEditable", v-html="matchSearch(preview.title)", @blur="update('title', $event)")
         .card-description
-          p(contenteditable, v-html="matchSearch(preview.description)", @blur="update('description', $event)")
+          p(:contenteditable="isEditable", v-html="matchSearch(preview.description)", @blur="update('description', $event)")
           .tags
-            span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)", contenteditable, @blur="updateTag('keywords', tag, $event)")
+            //- span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)", contenteditable, @blur="updateTag('keywords', tag, $event)")
+            span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)")
       .card-footer(v-if="footer")
         .button-group
           a.button.secondary(@click="deleteRecord") DELETE
@@ -68,6 +69,10 @@ export default {
     compact: {
       type: Boolean,
       default: false
+    },
+    editable: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -77,10 +82,20 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getSearchText: 'db/getSearchText'
+      getSearchText: 'db/getSearchText',
+      getUserId: 'user/getUserId'
     }),
     preview () {
       return this.source.data || this.source
+    },
+    isAuthor () {
+      return (this.source.publisherId === this.getUserId) || (this.source.userid === this.getUserId)
+    },
+    isEditable () {
+      return this.isAuthor && this.editable
+    },
+    nickName () {
+      return this.source.username.split('@')[0]
     }
   },
   methods: {

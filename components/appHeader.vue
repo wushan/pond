@@ -12,7 +12,7 @@
         nuxt-link.text-button(to="/")
           i.fa.fa-home
           span Home
-        nuxt-link.text-button(to="/personal")
+        nuxt-link.text-button(to="/personal", v-if="isLoggedIn")
           i.fa.fa-building-o
           span You
         nuxt-link.text-button(:to="'/' + getTeamSlug", v-if="getTeamSlug")

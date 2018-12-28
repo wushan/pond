@@ -101,6 +101,7 @@
   }
   .card-description {
     color: $darkgray;
+    word-break: break-all;
     p {
       font-size: 0.9em;
       text-indent: 2em;

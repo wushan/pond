@@ -3,7 +3,7 @@
     .waterfall
       transition-group(name="transform", tag="div", mode="out-in")
         lazy-component.pin(v-for="record of getRecordCache", :key="record.sid", @show="handler(record.sid)")
-          previewCard(:source="record", :id="record.sid", :compact="isCompact")
+          previewCard(:source="record", :id="record.sid", :compact="isCompact", :editable="true")
 </template>
 
 <script>

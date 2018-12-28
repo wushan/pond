@@ -66,6 +66,6 @@ export const getters = {
     }
   },
   getUserId (state) {
-    return state.user.userId
+    return (state.user || {}).userId
   }
 }
