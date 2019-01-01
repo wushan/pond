@@ -29,7 +29,7 @@
             span.tag(v-for="tag of preview.keywords", v-html="matchSearch(tag)")
       .card-footer(v-if="footer")
         .button-group
-          a.button.secondary(@click="deleteRecord") DELETE
+          a.button.secondary(v-if="isEditable", @click="deleteRecord") DELETE
           //- a.button.edit REFETCH
           a.button.primary(@click="copyResult(preview.url)") COPY
     .card.invalid(v-else)
@@ -41,7 +41,7 @@
           .title Invalid Record
         .card-description
           p This is an invalid record ({{ id }})
-      .card-footer(v-if="footer")
+      .card-footer(v-if="footer && isEditable")
         .button-group
           a.button.secondary DELETE
 </template>
@@ -158,7 +158,7 @@ export default {
       return moment(date).fromNow()
     },
     formatDateFromStamp (date) {
-      return moment(date, 'x').fromNow()
+      return moment(date).fromNow()
     }
   }
 }
