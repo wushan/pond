@@ -158,7 +158,7 @@ export default {
       return moment(date).fromNow()
     },
     formatDateFromStamp (date) {
-      return moment(date).fromNow()
+      return moment(date, 'x').fromNow()
     }
   }
 }

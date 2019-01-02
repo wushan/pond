@@ -1,4 +1,5 @@
 import Database from '~/assets/utils/db'
+import moment from 'moment'
 let db = {}
 if (process.browser) {
   db = new Database('pounds', 'fish', 5)
@@ -129,7 +130,7 @@ export const actions = {
         deleted: 0,
         sync: 1,
         indexed: 0,
-        created: item.created,
+        created: moment(item.created).format('x'),
         public: item.public ? 1 : 0,
         userid: item.publisherId,
         teamid: item.teamId
