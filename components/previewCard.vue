@@ -95,7 +95,7 @@ export default {
       return this.isAuthor && this.editable
     },
     nickName () {
-      return this.source.username.split('@')[0]
+      return ((this.source || {}).username || '').split('@')[0]
     }
   },
   methods: {
